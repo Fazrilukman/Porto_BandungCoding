@@ -85,11 +85,24 @@ const Blog = () => {
 
         {/* Blog Grid */}
         {blogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <BlogCard key={blog.id} {...blog} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogs.slice(0, 6).map((blog) => (
+                <BlogCard key={blog.id} {...blog} />
+              ))}
+            </div>
+            
+            {blogs.length > 6 && (
+              <div className="text-center mt-12" data-aos="fade-up">
+                <a href="/all-blogs" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 font-semibold group">
+                  <span>View All Blog</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-20">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6">

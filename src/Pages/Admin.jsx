@@ -457,6 +457,14 @@ const Admin = () => {
     }
   };
 
+  const handleToggleComment = (id) => {
+    const updated = comments.map(c => 
+      c.id === id ? { ...c, isEnabled: c.isEnabled === undefined ? false : !c.isEnabled } : c
+    );
+    setComments(updated);
+    localStorage.setItem('supercode_comments', JSON.stringify(updated));
+  };
+
   const formatCommentDate = (timestamp) => {
     const date = new Date(timestamp);
     const now = new Date();
@@ -849,10 +857,23 @@ const Admin = () => {
                             <div className="flex items-center gap-2 mb-1">
                               <h3 className="text-lg font-bold text-white">{comment.name}</h3>
                               <span className="text-xs text-slate-400">{formatCommentDate(comment.timestamp)}</span>
+                              {comment.isEnabled === false && (
+                                <span className="px-2 py-0.5 text-xs bg-red-500/20 text-red-400 border border-red-500/30 rounded-full">Disabled</span>
+                              )}
                             </div>
                             <p className="text-slate-300 text-sm">{comment.message}</p>
                           </div>
                           <div className="flex gap-2 flex-shrink-0">
+                            <button
+                              onClick={() => handleToggleComment(comment.id)}
+                              className={`px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
+                                comment.isEnabled === false 
+                                  ? 'bg-green-500/20 hover:bg-green-500/30 text-green-400' 
+                                  : 'bg-orange-500/20 hover:bg-orange-500/30 text-orange-400'
+                              }`}
+                            >
+                              {comment.isEnabled === false ? 'Enable' : 'Disable'}
+                            </button>
                             <button
                               onClick={() => handleDeleteComment(comment.id)}
                               className="p-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition-colors"

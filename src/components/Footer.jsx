@@ -1,5 +1,6 @@
 import React from 'react';
-import { Github, Linkedin, Instagram, Mail, Phone, MapPin, ExternalLink, Heart } from 'lucide-react';
+import { Instagram, Mail, Phone, MapPin, ExternalLink, Heart, Youtube, MessageCircle } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -27,22 +28,28 @@ const Footer = () => {
 
   const socialLinks = [
     { 
-      icon: Github, 
-      link: 'https://github.com/BandungCoding',
-      name: 'GitHub',
-      color: 'hover:text-white'
-    },
-    { 
-      icon: Linkedin, 
-      link: 'https://www.linkedin.com/',
-      name: 'LinkedIn',
-      color: 'hover:text-[#0A66C2]'
-    },
-    { 
       icon: Instagram, 
       link: 'https://www.instagram.com/',
       name: 'Instagram',
       color: 'hover:text-[#E4405F]'
+    },
+    { 
+      icon: FaTiktok, 
+      link: 'https://www.tiktok.com/',
+      name: 'TikTok',
+      color: 'hover:text-white'
+    },
+    { 
+      icon: MessageCircle, 
+      link: 'https://wa.me/6281234567890',
+      name: 'WhatsApp',
+      color: 'hover:text-[#25D366]'
+    },
+    { 
+      icon: Youtube, 
+      link: 'https://www.youtube.com/',
+      name: 'YouTube',
+      color: 'hover:text-[#FF0000]'
     },
   ];
 

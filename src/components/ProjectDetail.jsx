@@ -116,6 +116,7 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -242,16 +243,51 @@ const ProjectDetails = () => {
             </div>
 
             <div className="space-y-6 md:space-y-10 animate-slideInRight">
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
-              
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img
-                  src={project.Img}
-                  alt={project.Title}
-                  className="w-full  object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
-                  onLoad={() => setIsImageLoaded(true)}
-                />
-                <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
+              {/* Main Image with Gallery */}
+              <div className="space-y-4">
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <img
+                    src={project.Images && project.Images.length > 0 ? project.Images[currentImageIndex] : project.Img}
+                    alt={`${project.Title} - Image ${currentImageIndex + 1}`}
+                    className="w-full object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
+                    onLoad={() => setIsImageLoaded(true)}
+                  />
+                  <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
+                  
+                  {/* Image Counter */}
+                  {project.Images && project.Images.length > 1 && (
+                    <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm">
+                      {currentImageIndex + 1} / {project.Images.length}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Image Thumbnails */}
+                {project.Images && project.Images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {project.Images.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                          currentImageIndex === index 
+                            ? 'border-purple-500 ring-2 ring-purple-500/50' 
+                            : 'border-white/10 hover:border-white/30'
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-20 object-cover"
+                        />
+                        {currentImageIndex === index && (
+                          <div className="absolute inset-0 bg-purple-500/20" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Fitur Utama */}

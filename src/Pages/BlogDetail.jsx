@@ -70,10 +70,10 @@ const BlogDetail = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors group mb-8"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>Kembali ke Blog</span>
+            <span>Kembali ke Menu</span>
           </button>
 
           {/* Article Header */}

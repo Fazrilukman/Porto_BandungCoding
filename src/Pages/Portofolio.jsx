@@ -677,7 +677,15 @@ export default function FullWidthTabs() {
         </div>
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
-          Butuh solusi khusus? <button onClick={() => handleOpenModal('Custom')} className="text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300">Konsultasikan kebutuhan Anda</button>
+          Butuh solusi khusus? <button onClick={() => {
+            const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
+            const whatsappConfig = savedWhatsappConfig 
+              ? JSON.parse(savedWhatsappConfig) 
+              : { phoneNumber: '6281234567890', businessName: 'BandungCoding' };
+            const message = `Halo ${whatsappConfig.businessName}, saya ingin konsultasi mengenai pembuatan website custom.`;
+            const whatsappUrl = `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+          }} className="text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300">Konsultasikan kebutuhan Anda</button>
         </p>
       </div>
 

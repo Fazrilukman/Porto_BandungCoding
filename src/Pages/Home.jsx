@@ -21,7 +21,7 @@ const StatusBadge = memo(() => (
 
 const MainTitle = memo(() => (
   <div className="space-y-2" data-aos="fade-up" data-aos-delay="600">
-    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold tracking-tight flex flex-col items-center">
+    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold tracking-tight flex flex-col md:flex-row items-center justify-center md:gap-4">
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
@@ -47,21 +47,19 @@ const TechStack = memo(({ tech }) => (
   </div>
 ));
 
-const CTAButton = memo(({ href, text, icon: Icon }) => (
-  <a href={href}>
-    <button className="group relative min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
-      <div className="absolute -inset-1 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-lg group-hover:opacity-90 transition-all duration-700"></div>
-      <div className="relative h-11 sm:h-14 lg:h-16 bg-[#030014] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
-        <span className="absolute inset-0 flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-lg lg:text-xl group-hover:gap-3 sm:group-hover:gap-4 transition-all duration-300">
-          <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-semibold z-10">
-            {text}
-          </span>
-          <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-gray-200 ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
+const CTAButton = memo(({ onClick, text, icon: Icon }) => (
+  <button onClick={onClick} className="group relative min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
+    <div className="absolute -inset-1 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-lg group-hover:opacity-90 transition-all duration-700"></div>
+    <div className="relative h-12 sm:h-14 lg:h-16 bg-[#030014] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
+      <span className="absolute inset-0 flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-lg lg:text-xl group-hover:gap-3 sm:group-hover:gap-4 transition-all duration-300">
+        <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-semibold z-10">
+          {text}
         </span>
-      </div>
-    </button>
-  </a>
+        <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-gray-200 ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
+      </span>
+    </div>
+  </button>
 ));
 
 const SocialLink = memo(({ icon: Icon, link }) => (
@@ -94,6 +92,17 @@ const Home = () => {
   const [charIndex, setCharIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
+
+  const handleWhatsAppClick = () => {
+    const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
+    const whatsappConfig = savedWhatsappConfig 
+      ? JSON.parse(savedWhatsappConfig) 
+      : { phoneNumber: '6281234567890', businessName: 'BandungCoding' };
+    
+    const message = `Halo ${whatsappConfig.businessName}, saya ingin konsultasi mengenai pembuatan website.`;
+    const whatsappUrl = `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  }
 
   // Optimize AOS initialization
   useEffect(() => {
@@ -192,9 +201,9 @@ const Home = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-row gap-4 justify-center px-4" data-aos="fade-up" data-aos-delay="1200">
-                  <CTAButton href="#Contact" text="Pesan Sekarang" icon={Mail} />
-                  <CTAButton href="#paket-section" text="Lihat Paket" icon={ExternalLink} />
+                <div className="flex flex-row gap-4 justify-center px-4 items-stretch" data-aos="fade-up" data-aos-delay="1200">
+                  <CTAButton onClick={handleWhatsAppClick} text="Pesan Sekarang" icon={Mail} />
+                  <CTAButton onClick={handleWhatsAppClick} text="Lihat Paket" icon={ExternalLink} />
                 </div>
               </div>
             </div>
