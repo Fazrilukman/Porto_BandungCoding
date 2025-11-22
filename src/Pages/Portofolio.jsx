@@ -110,7 +110,7 @@ export default function FullWidthTabs() {
           {
             id: 1,
             name: 'E-Commerce Platform',
-            image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&auto=format&fit=crop',
+            image: 'https://via.placeholder.com/800x600/4f46e5/ffffff?text=E-Commerce+Platform',
             techStack: ['React', 'Node.js', 'MongoDB'],
             description: 'Modern e-commerce solution with payment integration',
             category: 'Web Development',
@@ -120,7 +120,7 @@ export default function FullWidthTabs() {
           {
             id: 2,
             name: 'Portfolio Website',
-            image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop',
+            image: 'https://via.placeholder.com/800x600/8b5cf6/ffffff?text=Portfolio+Website',
             techStack: ['React', 'Tailwind CSS', 'Vite'],
             description: 'Creative portfolio website with modern animations',
             category: 'Web Development',
@@ -130,7 +130,7 @@ export default function FullWidthTabs() {
           {
             id: 3,
             name: 'Dashboard Analytics',
-            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
+            image: 'https://via.placeholder.com/800x600/6366f1/ffffff?text=Dashboard+Analytics',
             techStack: ['React', 'Chart.js', 'Firebase'],
             description: 'Real-time analytics dashboard with data visualization',
             category: 'Web Development',
