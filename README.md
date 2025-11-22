@@ -1,6 +1,6 @@
 ## 🚀 Live Demo
 
-**Website Link:** [https://www.eki.my.id/](https://www.bandungcoding.com)
+**Website Link:** [https://www.bandungcoding/](https://www.bandungcoding.com)
 
 ## 🛠️ Tech Stack
 
