@@ -114,7 +114,7 @@ export default function FullWidthTabs() {
             techStack: ['React', 'Node.js', 'MongoDB'],
             description: 'Modern e-commerce solution with payment integration',
             category: 'Web Development',
-            link: '#',
+            link: '',
             featured: true
           },
           {
@@ -124,7 +124,7 @@ export default function FullWidthTabs() {
             techStack: ['React', 'Tailwind CSS', 'Vite'],
             description: 'Creative portfolio website with modern animations',
             category: 'Web Development',
-            link: '#',
+            link: '',
             featured: true
           },
           {
@@ -134,7 +134,7 @@ export default function FullWidthTabs() {
             techStack: ['React', 'Chart.js', 'Firebase'],
             description: 'Real-time analytics dashboard with data visualization',
             category: 'Web Development',
-            link: '#',
+            link: '',
             featured: true
           }
         ];
