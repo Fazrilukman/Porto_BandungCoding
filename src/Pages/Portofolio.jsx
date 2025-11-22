@@ -461,21 +461,24 @@ export default function FullWidthTabs() {
                           </div>
                         )}
                         <div className="p-6">
-                          <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
-                          <p className="text-slate-400 text-sm mb-4">{project.description}</p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-purple-400">{project.technologies}</span>
-                            {project.link && (
-                              <a 
-                                href={project.link} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-xs text-blue-400 hover:text-blue-300 underline"
-                              >
-                                View Project →
-                              </a>
-                            )}
+                          <h3 className="text-xl font-bold mb-2 text-white">{project.name || project.title}</h3>
+                          <p className="text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {(project.techStack || []).slice(0, 3).map((tech, i) => (
+                              <span key={i} className="text-xs px-2 py-1 bg-purple-500/20 text-purple-300 rounded-full">
+                                {tech}
+                              </span>
+                            ))}
                           </div>
+                          <a 
+                            href={`/project/${project.id}`}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group"
+                          >
+                            View Project
+                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </a>
                         </div>
                       </div>
                     </div>
