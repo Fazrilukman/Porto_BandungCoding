@@ -565,7 +565,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Landing Page')}
-              className="w-full py-3 px-6 rounded-xl bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 border-2 border-purple-200 dark:border-purple-500/30 font-semibold hover:bg-purple-50 dark:hover:bg-purple-500/10 transition-all duration-300"
+              className="w-full h-12 py-3 px-6 rounded-xl bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 border-2 border-purple-200 dark:border-purple-500/30 font-semibold hover:bg-purple-50 dark:hover:bg-purple-500/10 transition-all duration-300 flex items-center justify-center"
             >
               Pilih Landing Page
             </button>
@@ -620,7 +620,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Company Profile')}
-              className="w-full py-3 px-6 rounded-xl bg-white text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-300 shadow-lg"
+              className="w-full h-12 py-3 px-6 rounded-xl bg-white text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-300 shadow-lg flex items-center justify-center"
             >
               Pilih Company Profile
             </button>
@@ -669,7 +669,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Custom Website')}
-              className="w-full py-3 px-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
+              className="w-full h-12 py-3 px-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
             >
               Konsultasi Gratis
             </button>
