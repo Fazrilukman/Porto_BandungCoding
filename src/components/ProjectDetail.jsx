@@ -102,15 +102,24 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+    const storedProjects = JSON.parse(localStorage.getItem("supercode_projects")) || [];
     const selectedProject = storedProjects.find((p) => String(p.id) === id);
     
     if (selectedProject) {
       const enhancedProject = {
         ...selectedProject,
-        Features: selectedProject.Features || [],
-        TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || 'https://github.com/EkiZR',
+        Title: selectedProject.name || selectedProject.Title,
+        Img: selectedProject.image || selectedProject.Img,
+        Description: selectedProject.description || selectedProject.Description,
+        Link: selectedProject.link || selectedProject.Link,
+        TechStack: selectedProject.techStack || selectedProject.TechStack || [],
+        Features: selectedProject.Features || [
+          'Responsive Design',
+          'Modern UI/UX',
+          'Fast Performance',
+          'SEO Optimized'
+        ],
+        Github: selectedProject.Github || 'Private',
       };
       setProject(enhancedProject);
     }
