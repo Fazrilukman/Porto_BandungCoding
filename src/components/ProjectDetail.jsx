@@ -103,7 +103,10 @@ const ProjectDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     const storedProjects = JSON.parse(localStorage.getItem("supercode_projects")) || [];
+    console.log('All projects from localStorage:', storedProjects);
     const selectedProject = storedProjects.find((p) => String(p.id) === id);
+    console.log('Selected project:', selectedProject);
+    console.log('Project ID from URL:', id);
     
     if (selectedProject) {
       const enhancedProject = {
@@ -111,7 +114,7 @@ const ProjectDetails = () => {
         Title: selectedProject.name || selectedProject.Title,
         Img: selectedProject.image || selectedProject.Img,
         Description: selectedProject.description || selectedProject.Description,
-        Link: selectedProject.link || selectedProject.Link,
+        Link: selectedProject.link || selectedProject.Link || '',
         TechStack: selectedProject.techStack || selectedProject.TechStack || [],
         Features: selectedProject.Features || [
           'Responsive Design',
@@ -121,7 +124,10 @@ const ProjectDetails = () => {
         ],
         Github: selectedProject.Github || 'Private',
       };
+      console.log('Enhanced project:', enhancedProject);
       setProject(enhancedProject);
+    } else {
+      console.error('Project not found for ID:', id);
     }
   }, [id]);
 
