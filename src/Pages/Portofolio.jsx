@@ -110,7 +110,7 @@ export default function FullWidthTabs() {
           {
             id: 1,
             name: 'E-Commerce Platform',
-            image: 'https://via.placeholder.com/800x600/4f46e5/ffffff?text=E-Commerce+Platform',
+            image: 'https://placehold.co/800x600/4f46e5/ffffff/png?text=E-Commerce+Platform',
             techStack: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind CSS'],
             description: 'Modern e-commerce solution with payment integration, shopping cart, user authentication, and admin dashboard. Built with scalability and performance in mind.',
             category: 'Web Development',
@@ -129,7 +129,7 @@ export default function FullWidthTabs() {
           {
             id: 2,
             name: 'Portfolio Website',
-            image: 'https://via.placeholder.com/800x600/8b5cf6/ffffff?text=Portfolio+Website',
+            image: 'https://placehold.co/800x600/8b5cf6/ffffff/png?text=Portfolio+Website',
             techStack: ['React', 'Tailwind CSS', 'Vite', 'Framer Motion'],
             description: 'Creative portfolio website with modern animations and smooth transitions. Showcasing projects, skills, and professional experience with an elegant design.',
             category: 'Web Development',
@@ -148,7 +148,7 @@ export default function FullWidthTabs() {
           {
             id: 3,
             name: 'Dashboard Analytics',
-            image: 'https://via.placeholder.com/800x600/6366f1/ffffff?text=Dashboard+Analytics',
+            image: 'https://placehold.co/800x600/6366f1/ffffff/png?text=Dashboard+Analytics',
             techStack: ['React', 'Chart.js', 'Firebase', 'Material-UI'],
             description: 'Real-time analytics dashboard with data visualization, charts, and metrics tracking. Perfect for monitoring business KPIs and making data-driven decisions.',
             category: 'Web Development',
