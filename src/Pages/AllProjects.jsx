@@ -36,11 +36,17 @@ export default function AllProjects() {
     if (searchTerm.trim() === "") {
       setFilteredProjects(projects);
     } else {
-      const filtered = projects.filter(project =>
-        project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.technologies.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const filtered = projects.filter(project => {
+        const title = project.name || project.title || '';
+        const description = project.description || '';
+        const techStack = Array.isArray(project.techStack) 
+          ? project.techStack.join(' ') 
+          : (project.technologies || '');
+        
+        return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               techStack.toLowerCase().includes(searchTerm.toLowerCase());
+      });
       setFilteredProjects(filtered);
     }
   }, [searchTerm, projects]);
@@ -111,13 +117,13 @@ export default function AllProjects() {
               >
                 <div className="bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300 h-full flex flex-col">
                   {/* Project Image */}
-                  {project.image && (
+                  {(project.image || project.Img) && (
                     <div className="relative h-48 overflow-hidden">
                       <img 
-                        src={project.image} 
-                        alt={project.title}
+                        src={project.image || project.Img} 
+                        alt={project.name || project.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        onError={(e) => {e.target.src = 'https://via.placeholder.com/400x300?text=No+Image'}}
+                        onError={(e) => {e.target.src = 'https://placehold.co/400x300?text=No+Image'}}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
@@ -126,38 +132,54 @@ export default function AllProjects() {
                   {/* Project Info */}
                   <div className="p-6 flex-1 flex flex-col">
                     <h3 className="text-xl font-bold mb-2 text-white group-hover:text-purple-400 transition-colors duration-300">
-                      {project.title}
+                      {project.name || project.title}
                     </h3>
-                    <p className="text-slate-400 text-sm mb-4 flex-1">
+                    <p className="text-slate-400 text-sm mb-4 flex-1 line-clamp-3">
                       {project.description}
                     </p>
 
                     {/* Technologies */}
                     <div className="mb-4">
                       <div className="flex flex-wrap gap-2">
-                        {project.technologies.split(',').map((tech, idx) => (
+                        {(Array.isArray(project.techStack) 
+                          ? project.techStack 
+                          : (project.technologies || '').split(',')
+                        ).slice(0, 4).map((tech, idx) => (
                           <span
                             key={idx}
                             className="px-2 py-1 text-xs rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20"
                           >
-                            {tech.trim()}
+                            {typeof tech === 'string' ? tech.trim() : tech}
                           </span>
                         ))}
+                        {((Array.isArray(project.techStack) ? project.techStack.length : (project.technologies || '').split(',').length) > 4) && (
+                          <span className="px-2 py-1 text-xs rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                            +{(Array.isArray(project.techStack) ? project.techStack.length : (project.technologies || '').split(',').length) - 4} more
+                          </span>
+                        )}
                       </div>
                     </div>
 
-                    {/* View Project Link */}
-                    {project.link && (
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors duration-300 group/link"
+                    {/* Action Buttons */}
+                    <div className="flex gap-2 mt-auto">
+                      <button
+                        onClick={() => navigate(`/project/${project.id}`)}
+                        className="flex-1 px-4 py-2 text-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 font-medium"
                       >
-                        <span>View Project</span>
-                        <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
-                      </a>
-                    )}
+                        View Details
+                      </button>
+                      
+                      {(project.link || project.Link) && (project.link || project.Link).trim() !== '' && (
+                        <a 
+                          href={project.link || project.Link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 text-sm text-blue-400 bg-blue-500/10 rounded-lg hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 flex items-center gap-1 group/link"
+                        >
+                          <ExternalLink className="w-4 h-4 group-hover/link:rotate-12 transition-transform duration-300" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
