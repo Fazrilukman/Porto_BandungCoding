@@ -367,27 +367,30 @@ const Admin = () => {
   };
 
   const handleSaveProject = () => {
-    // Only validate essential fields
-    if (!projectForm.name && !projectForm.title) {
+    // Only validate title and description (the required fields)
+    const title = projectForm.title || projectForm.name || '';
+    const description = projectForm.description || '';
+    
+    if (!title.trim()) {
       alert('Please enter project title');
       return;
     }
     
-    if (!projectForm.description) {
+    if (!description.trim()) {
       alert('Please enter project description');
       return;
     }
 
     const projectData = {
       id: editMode ? currentItem.id : Date.now(),
-      name: projectForm.name || projectForm.title,
-      title: projectForm.title || projectForm.name,
-      description: projectForm.description,
-      image: projectForm.image || imagePreview || '',
-      techStack: projectForm.technologies ? projectForm.technologies.split(',').map(t => t.trim()) : [],
+      name: title,
+      title: title,
+      description: description,
+      image: imagePreview || projectForm.image || '',
+      techStack: projectForm.technologies ? projectForm.technologies.split(',').map(t => t.trim()).filter(t => t) : [],
       link: projectForm.link || '',
       category: projectForm.category || 'Web Development',
-      featured: projectForm.featured || true,
+      featured: projectForm.featured !== undefined ? projectForm.featured : true,
       Features: projectForm.Features || [],
       Github: projectForm.Github || 'Private'
     };
