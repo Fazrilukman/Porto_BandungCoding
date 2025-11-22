@@ -327,17 +327,10 @@ export default function FullWidthTabs() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                   onError={(e) => {e.target.src = 'https://placehold.co/400x300/4f46e5/ffffff?text=No+Image'}}
-                  />
-                </div>
-              </SwiperSlide>
-            ))
-          ) : (
-            <SwiperSlide>
-              <div className="w-full h-[280px] rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 flex items-center justify-center">
-                <p className="text-slate-400">No carousel images yet. Add images in <a href="/admin" className="text-purple-400 hover:underline">Admin Panel</a></p>
+                />
               </div>
             </SwiperSlide>
-          )}
+          ))}
         </Swiper>
       </div>
 
