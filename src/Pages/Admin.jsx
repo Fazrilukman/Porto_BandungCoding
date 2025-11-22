@@ -367,23 +367,43 @@ const Admin = () => {
   };
 
   const handleSaveProject = () => {
-    if (!projectForm.title || !projectForm.description) {
-      alert('Please fill in all required fields');
+    // Only validate essential fields
+    if (!projectForm.name && !projectForm.title) {
+      alert('Please enter project title');
+      return;
+    }
+    
+    if (!projectForm.description) {
+      alert('Please enter project description');
       return;
     }
 
+    const projectData = {
+      id: editMode ? currentItem.id : Date.now(),
+      name: projectForm.name || projectForm.title,
+      title: projectForm.title || projectForm.name,
+      description: projectForm.description,
+      image: projectForm.image || imagePreview || '',
+      techStack: projectForm.technologies ? projectForm.technologies.split(',').map(t => t.trim()) : [],
+      link: projectForm.link || '',
+      category: projectForm.category || 'Web Development',
+      featured: projectForm.featured || true,
+      Features: projectForm.Features || [],
+      Github: projectForm.Github || 'Private'
+    };
+
     if (editMode) {
-      const updated = projects.map(p => p.id === currentItem.id ? { ...projectForm, id: currentItem.id } : p);
+      const updated = projects.map(p => p.id === currentItem.id ? projectData : p);
       setProjects(updated);
       saveToLocalStorage('projects', updated);
     } else {
-      const newProject = { ...projectForm, id: Date.now() };
-      const updated = [...projects, newProject];
+      const updated = [...projects, projectData];
       setProjects(updated);
       saveToLocalStorage('projects', updated);
     }
+    
     setShowModal(false);
-    setProjectForm({ title: '', description: '', image: '', technologies: '', link: '' });
+    setProjectForm({ title: '', name: '', description: '', image: '', technologies: '', link: '', category: 'Web Development' });
     setImageFile(null);
     setImagePreview('');
   };

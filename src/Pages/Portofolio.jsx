@@ -318,16 +318,15 @@ export default function FullWidthTabs() {
           }}
           className="project-swiper"
         >
-          {carouselImages.length > 0 ? (
-            carouselImages.map((item, index) => (
-              <SwiperSlide key={item.id || index}>
-                <div className="w-full h-[280px] rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
-                  <img 
-                    src={item.imageUrl}
-                    alt={item.title || `Project ${index + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                    onError={(e) => {e.target.src = 'https://via.placeholder.com/400x300?text=No+Image'}}
+          {(carouselImages.length > 0 ? carouselImages : projects.slice(0, 6)).map((item, index) => (
+            <SwiperSlide key={item.id || index}>
+              <div className="w-full h-[280px] rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
+                <img 
+                  src={item.imageUrl || item.image}
+                  alt={item.title || item.name || `Project ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
+                  onError={(e) => {e.target.src = 'https://placehold.co/400x300/4f46e5/ffffff?text=No+Image'}}
                   />
                 </div>
               </SwiperSlide>
