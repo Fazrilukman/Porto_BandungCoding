@@ -50,6 +50,7 @@ const FeatureItem = ({ feature }) => {
 const ProjectStats = ({ project }) => {
   const techStackCount = project?.TechStack?.length || 0;
   const featuresCount = project?.Features?.length || 0;
+  const hasLiveDemo = project?.Link && project.Link.trim() !== '';
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 p-3 md:p-4 bg-[#0a0a1a] rounded-xl overflow-hidden relative">
@@ -74,6 +75,22 @@ const ProjectStats = ({ project }) => {
           <div className="text-[10px] md:text-xs text-gray-400">Fitur Utama</div>
         </div>
       </div>
+
+      {hasLiveDemo && (
+        <div className="relative z-10 col-span-2">
+          <a
+            href={project.Link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600/20 to-emerald-600/20 p-3 md:p-4 rounded-lg border border-green-500/20 transition-all duration-300 hover:scale-105 hover:border-green-500/50 hover:shadow-lg group"
+          >
+            <ExternalLink className="text-green-300 w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform" strokeWidth={1.5} />
+            <span className="text-sm md:text-base font-semibold text-green-200 group-hover:text-green-100 transition-colors">
+              View Live Demo
+            </span>
+          </a>
+        </div>
+      )}
     </div>
   );
 };
