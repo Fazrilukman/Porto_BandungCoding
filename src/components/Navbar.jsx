@@ -81,7 +81,16 @@ const Navbar = () => {
     const scrollToSection = (e, href) => {
         e.preventDefault();
         
-        // Jika href adalah #Home, scroll ke paling atas
+        // Check if we're on the home page
+        const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+        
+        if (!isHomePage) {
+            // If not on home page, navigate to home page with hash
+            window.location.href = '/' + href;
+            return;
+        }
+        
+        // If on home page, scroll to section
         if (href === "#Home") {
             window.scrollTo({
                 top: 0,
@@ -104,9 +113,9 @@ const Navbar = () => {
         <nav
             className={`fixed w-full top-0 z-50 transition-all duration-500 ${
                 isOpen
-                    ? "bg-[#030014]"
+                    ? "bg-[var(--bg-primary)]"
                     : scrolled
-                    ? "bg-[#030014]/50 backdrop-blur-xl"
+                    ? "bg-[var(--bg-primary)]/80 backdrop-blur-xl border-b border-white/10 dark:border-white/5"
                     : "bg-transparent"
             }`}
         >
@@ -146,7 +155,7 @@ const Navbar = () => {
                                         className={`relative z-10 transition-colors duration-300 ${
                                             activeSection === item.href.substring(1)
                                                 ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
-                                                : "text-[#e2d3fd] group-hover:text-white"
+                                                : "text-slate-300 dark:text-[#e2d3fd] group-hover:text-slate-900 dark:group-hover:text-white"
                                         }`}
                                     >
                                         {item.label}
@@ -162,7 +171,7 @@ const Navbar = () => {
                             ))}
                             <button
                               onClick={toggleTheme}
-                              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[#e2d3fd] hover:text-white hover:bg-white/10 transition-colors"
+                              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-[#e2d3fd] hover:text-slate-900 dark:hover:text-white hover:bg-slate-300 dark:hover:bg-white/10 transition-colors"
                               title="Toggle theme"
                             >
                               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -174,7 +183,7 @@ const Navbar = () => {
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`relative p-2 text-[#e2d3fd] hover:text-white transition-transform duration-300 ease-in-out transform ${
+                            className={`relative p-2 text-slate-700 dark:text-[#e2d3fd] hover:text-slate-900 dark:hover:text-white transition-transform duration-300 ease-in-out transform ${
                                 isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
                             }`}
                         >
@@ -205,7 +214,7 @@ const Navbar = () => {
                             className={`block px-4 py-3 text-lg font-medium transition-all duration-300 ease ${
                                 activeSection === item.href.substring(1)
                                     ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
-                                    : "text-[#e2d3fd] hover:text-white"
+                                    : "text-slate-700 dark:text-[#e2d3fd] hover:text-slate-900 dark:hover:text-white"
                             }`}
                             style={{
                                 transitionDelay: `${index * 100}ms`,
@@ -218,7 +227,7 @@ const Navbar = () => {
                     ))}
                     <button
                       onClick={toggleTheme}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-lg font-medium text-[#e2d3fd] hover:text-white bg-white/5 border border-white/10 rounded-lg"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-lg font-medium text-slate-700 dark:text-[#e2d3fd] hover:text-slate-900 dark:hover:text-white bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-lg"
                     >
                       {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                       {theme === 'light' ? 'Dark Mode' : 'Light Mode'}

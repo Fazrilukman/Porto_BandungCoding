@@ -54,8 +54,8 @@ const BlogDetail = () => {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-[#030014] flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
       </div>
     );
   }
@@ -65,12 +65,12 @@ const BlogDetail = () => {
       <Navbar />
       <AnimatedBackground />
       
-      <div className="min-h-screen bg-[#030014] pt-24 pb-16">
+      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors group mb-8"
+            className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors group mb-8 cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
             <span>Kembali ke Menu</span>
@@ -84,20 +84,20 @@ const BlogDetail = () => {
                 <Tag className="w-4 h-4" />
                 {article.category}
               </span>
-              <span className="flex items-center gap-2 text-gray-400 text-sm">
+              <span className="flex items-center gap-2 text-slate-600 dark:text-gray-400 text-sm">
                 <Calendar className="w-4 h-4" />
                 {article.date}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white leading-tight">
               {article.title}
             </h1>
 
             {/* Share Buttons */}
             <div className="flex items-center gap-3">
-              <span className="text-gray-400 text-sm flex items-center gap-2">
+              <span className="text-slate-600 dark:text-gray-400 text-sm flex items-center gap-2">
                 <Share2 className="w-4 h-4" />
                 Bagikan:
               </span>
@@ -127,7 +127,7 @@ const BlogDetail = () => {
 
           {/* Featured Image */}
           {article.image && (
-            <div className="mb-12 rounded-2xl overflow-hidden border border-white/10">
+            <div className="mb-12 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10">
               <img
                 src={article.image}
                 alt={article.title}
@@ -138,15 +138,15 @@ const BlogDetail = () => {
 
           {/* Article Content */}
           <div className="prose prose-invert prose-lg max-w-none">
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-white/10">
+            <div className="bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-slate-200 dark:border-white/10">
               {/* Excerpt */}
-              <p className="text-xl text-gray-300 leading-relaxed mb-8 font-light italic border-l-4 border-purple-500 pl-6">
+              <p className="text-xl text-slate-700 dark:text-gray-300 leading-relaxed mb-8 font-light italic border-l-4 border-purple-500 pl-6">
                 {article.excerpt}
               </p>
 
               {/* Full Content */}
               <div 
-                className="text-gray-300 leading-relaxed space-y-6"
+                className="text-slate-700 dark:text-gray-300 leading-relaxed space-y-6"
                 dangerouslySetInnerHTML={{ __html: article.content || article.excerpt }}
               />
             </div>
@@ -154,8 +154,8 @@ const BlogDetail = () => {
 
           {/* Tags Section */}
           {article.tags && article.tags.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-white/10">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+            <div className="mt-12 pt-8 border-t border-slate-200 dark:border-white/10">
+              <h3 className="text-slate-900 dark:text-white font-semibold mb-4 flex items-center gap-2">
                 <Tag className="w-5 h-5" />
                 Tags
               </h3>
@@ -163,7 +163,7 @@ const BlogDetail = () => {
                 {article.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm text-gray-300 transition-colors cursor-pointer"
+                    className="px-3 py-1 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 rounded-full text-sm text-slate-700 dark:text-gray-300 transition-colors cursor-pointer"
                   >
                     {tag}
                   </span>
@@ -174,14 +174,14 @@ const BlogDetail = () => {
 
           {/* Related Articles */}
           {relatedArticles.length > 0 && (
-            <div className="mt-16 pt-12 border-t border-white/10">
-              <h2 className="text-3xl font-bold text-white mb-8">Artikel Terkait</h2>
+            <div className="mt-16 pt-12 border-t border-slate-200 dark:border-white/10">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Artikel Terkait</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedArticles.map((related) => (
                   <div
                     key={related.id}
                     onClick={() => navigate(`/blog/${related.slug}`)}
-                    className="group cursor-pointer bg-white/5 backdrop-blur-xl rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all"
+                    className="group cursor-pointer bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-purple-500/30 transition-all"
                   >
                     <img
                       src={related.image}
@@ -189,8 +189,8 @@ const BlogDetail = () => {
                       className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="p-4">
-                      <span className="text-xs text-purple-400 font-semibold">{related.category}</span>
-                      <h3 className="text-white font-bold mt-2 line-clamp-2 group-hover:text-purple-400 transition-colors">
+                      <span className="text-xs text-purple-600 dark:text-purple-400 font-semibold">{related.category}</span>
+                      <h3 className="text-slate-900 dark:text-white font-bold mt-2 line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                         {related.title}
                       </h3>
                       <p className="text-sm text-gray-400 mt-2 line-clamp-2">{related.excerpt}</p>

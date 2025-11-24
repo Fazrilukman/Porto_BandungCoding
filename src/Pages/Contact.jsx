@@ -151,7 +151,7 @@ const ContactPage = () => {
                 <h2 className="text-4xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
                   Hubungi
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-slate-600 dark:text-gray-400">
                   Ada yang ingin didiskusikan? Kirim saya pesan dan mari kita bicara.
                 </p>
               </div>
@@ -167,7 +167,7 @@ const ContactPage = () => {
                 data-aos-delay="100"
                 className="relative group"
               >
-                <User className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
+                <User className="absolute left-4 top-4 w-5 h-5 text-slate-500 dark:text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
                 <input
                   type="text"
                   name="name"
@@ -175,7 +175,7 @@ const ContactPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
+                  className="w-full p-4 pl-12 bg-slate-100 dark:bg-white/10 rounded-xl border border-slate-300 dark:border-white/20 placeholder-slate-500 dark:placeholder-gray-500 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
                   required
                 />
               </div>
@@ -184,7 +184,7 @@ const ContactPage = () => {
                 data-aos-delay="200"
                 className="relative group"
               >
-                <Mail className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
+                <Mail className="absolute left-4 top-4 w-5 h-5 text-slate-500 dark:text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
                 <input
                   type="email"
                   name="email"
@@ -192,7 +192,7 @@ const ContactPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
+                  className="w-full p-4 pl-12 bg-slate-100 dark:bg-white/10 rounded-xl border border-slate-300 dark:border-white/20 placeholder-slate-500 dark:placeholder-gray-500 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
                   required
                 />
               </div>
@@ -201,16 +201,16 @@ const ContactPage = () => {
                 data-aos-delay="300"
                 className="relative group"
               >
-                <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
+                <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-slate-500 dark:text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
                 <textarea
                   name="message"
                   placeholder="Pesan Anda"
                   value={formData.message}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full resize-none p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 h-[9.9rem] disabled:opacity-50"
+                  className="w-full resize-none p-4 pl-12 bg-slate-100 dark:bg-white/10 rounded-xl border border-slate-300 dark:border-white/20 placeholder-slate-500 dark:placeholder-gray-500 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 h-[9.9rem] disabled:opacity-50"
                   required
-                />
+                ></textarea>
               </div>
               <button
                 data-aos="fade-up"

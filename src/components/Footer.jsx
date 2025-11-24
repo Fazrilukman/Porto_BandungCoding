@@ -97,7 +97,7 @@ const Footer = () => {
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent mb-1">
                     {profile?.brandName || 'BandungCoding'}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed">
                     Tim developer profesional yang berdedikasi menciptakan solusi digital inovatif untuk bisnis Anda.
                   </p>
                 </div>
@@ -107,26 +107,26 @@ const Footer = () => {
               <div className="space-y-3">
                 <a 
                   href={`mailto:${profile?.email || 'info@bandungcoding.com'}`} 
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group"
+                  className="flex items-center gap-3 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors group"
                 >
-                  <div className="p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                  <div className="p-2 bg-slate-200 dark:bg-white/5 rounded-lg group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-colors">
                     <Mail className="w-4 h-4" />
                   </div>
                   <span className="text-sm">{profile?.email || 'info@bandungcoding.com'}</span>
                 </a>
                 
                 <a 
-                  href={`tel:${(profile?.phone || '+62 812-3456-7890').replace(/\\s+/g, '')}`} 
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group"
+                  href={`tel:${(profile?.phone || '+62 812-3456-7890').replace(/\s+/g, '')}`} 
+                  className="flex items-center gap-3 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors group"
                 >
-                  <div className="p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                  <div className="p-2 bg-slate-200 dark:bg-white/5 rounded-lg group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-colors">
                     <Phone className="w-4 h-4" />
                   </div>
                   <span className="text-sm">{profile?.phone || '+62 812-3456-7890'}</span>
                 </a>
                 
-                <div className="flex items-start gap-3 text-gray-400">
-                  <div className="p-2 bg-white/5 rounded-lg mt-0.5">
+                <div className="flex items-start gap-3 text-slate-600 dark:text-gray-400">
+                  <div className="p-2 bg-slate-200 dark:bg-white/5 rounded-lg mt-0.5">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <span className="text-sm">{profile?.location || 'Indonesia'}</span>
@@ -136,14 +136,14 @@ const Footer = () => {
 
             {/* Company Links */}
             <div>
-              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+              <h4 className="text-slate-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
               <ul className="space-y-3">
                 {footerLinks.company.map((link, index) => (
                   <li key={index}>
                     <a
                       href={link.href}
                       onClick={(e) => scrollToSection(e, link.href)}
-                      className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2 group"
+                      className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm flex items-center gap-2 group"
                     >
                       <span className="w-0 group-hover:w-2 h-px bg-gradient-to-r from-[#6366f1] to-[#a855f7] transition-all duration-300"></span>
                       {link.name}
@@ -155,14 +155,14 @@ const Footer = () => {
 
             {/* Services Links */}
             <div>
-              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Services</h4>
+              <h4 className="text-slate-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">Services</h4>
               <ul className="space-y-3">
                 {footerLinks.services.map((link, index) => (
                   <li key={index}>
                     <a
                       href={link.href}
                       onClick={(e) => scrollToSection(e, link.href)}
-                      className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2 group"
+                      className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm flex items-center gap-2 group"
                     >
                       <span className="w-0 group-hover:w-2 h-px bg-gradient-to-r from-[#6366f1] to-[#a855f7] transition-all duration-300"></span>
                       {link.name}
@@ -175,8 +175,8 @@ const Footer = () => {
             {/* Newsletter & Social */}
             <div className="space-y-6">
               <div>
-                <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Stay Connected</h4>
-                <p className="text-gray-400 text-sm mb-4">
+                <h4 className="text-slate-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">Stay Connected</h4>
+                <p className="text-slate-600 dark:text-gray-400 text-sm mb-4">
                   Ikuti kami untuk update terbaru dan tips seputar web development.
                 </p>
                 
@@ -188,7 +188,7 @@ const Footer = () => {
                       href={social.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`group relative p-3 bg-white/5 hover:bg-gradient-to-r hover:from-[#6366f1]/20 hover:to-[#a855f7]/20 rounded-lg transition-all duration-300 border border-white/10 hover:border-purple-400/50`}
+                      className={`group relative p-3 bg-slate-200 dark:bg-white/5 hover:bg-gradient-to-r hover:from-[#6366f1]/20 hover:to-[#a855f7]/20 rounded-lg transition-all duration-300 border border-slate-300 dark:border-white/10 hover:border-purple-400/50`}
                       title={social.name}
                     >
                       <social.icon className={`w-5 h-5 text-gray-300 ${social.color} transition-colors duration-300`} />
@@ -199,12 +199,12 @@ const Footer = () => {
 
               {/* Quick CTA */}
               <div className="bg-gradient-to-r from-[#6366f1]/10 to-[#a855f7]/10 border border-purple-500/20 rounded-lg p-4">
-                <p className="text-white text-sm font-semibold mb-2">Ready to Start?</p>
-                <p className="text-gray-400 text-xs mb-3">Konsultasi gratis untuk project Anda</p>
+                <p className="text-slate-900 dark:text-white text-sm font-semibold mb-2">Ready to Start?</p>
+                <p className="text-slate-600 dark:text-gray-400 text-xs mb-3">Konsultasi gratis untuk project Anda</p>
                 <a
                   href="#Contact"
                   onClick={(e) => scrollToSection(e, '#Contact')}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:gap-3 transition-all group"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white hover:gap-3 transition-all group"
                 >
                   Contact Us
                   <ExternalLink className="w-4 h-4 group-hover:rotate-45 transition-transform" />
@@ -218,7 +218,7 @@ const Footer = () => {
         <div className="border-t border-white/10 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Copyright */}
-            <div className="text-gray-400 text-sm text-center md:text-left">
+            <div className="text-slate-600 dark:text-gray-400 text-sm text-center md:text-left">
               <p className="flex items-center justify-center md:justify-start gap-1">
                 © {currentYear}{" "}
                 <a 
@@ -235,13 +235,13 @@ const Footer = () => {
 
             {/* Bottom Links */}
             <div className="flex gap-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                 Terms of Service
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                 Cookies
               </a>
             </div>

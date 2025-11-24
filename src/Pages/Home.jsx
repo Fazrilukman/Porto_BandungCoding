@@ -9,9 +9,9 @@ const StatusBadge = memo(() => (
   <div className="inline-block animate-float lg:mx-0" data-aos="zoom-in" data-aos-delay="400">
     <div className="relative group">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-      <div className="relative px-3 sm:px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10">
+      <div className="relative px-3 sm:px-4 py-2 rounded-full bg-white dark:bg-black/40 backdrop-blur-xl border border-purple-200 dark:border-white/10">
         <span className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-medium flex items-center">
-          <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-blue-400" />
+          <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-blue-500 dark:text-blue-400" />
           Jasa Website Profesional
         </span>
       </div>
@@ -50,13 +50,13 @@ const TechStack = memo(({ tech }) => (
 const CTAButton = memo(({ onClick, text, icon: Icon }) => (
   <button onClick={onClick} className="group relative w-full sm:w-auto min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
     <div className="absolute -inset-1 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-lg group-hover:opacity-90 transition-all duration-700"></div>
-    <div className="relative h-12 sm:h-14 lg:h-16 bg-[var(--bg-primary)] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8">
+    <div className="relative h-12 sm:h-14 lg:h-16 bg-white dark:bg-[#030014] backdrop-blur-xl rounded-lg border border-purple-300 dark:border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8 shadow-md dark:shadow-none">
       <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
       <span className="absolute inset-0 flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-lg lg:text-xl group-hover:gap-3 sm:group-hover:gap-4 transition-all duration-300">
-        <span className="font-semibold z-10 text-[var(--text-primary)]">
+        <span className="font-semibold z-10 text-slate-800 dark:text-white">
           {text}
         </span>
-        <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-[var(--text-primary)] ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
+        <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-slate-700 dark:text-white ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
       </span>
     </div>
   </button>
@@ -190,14 +190,14 @@ const Home = () => {
 
                 {/* Typing Effect */}
                 <div className="h-8 flex items-center justify-center" data-aos="fade-up" data-aos-delay="800">
-                  <span className="text-lg sm:text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light">
+                  <span className="text-lg sm:text-xl md:text-2xl text-slate-700 dark:text-slate-200 font-light">
                     {text}
                   </span>
                   <span className="w-[3px] h-6 bg-gradient-to-t from-[#6366f1] to-[#a855f7] ml-1 animate-blink"></span>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed font-light px-4"
+                <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light px-4"
                   data-aos="fade-up"
                   data-aos-delay="1000">
                   Kami menyediakan jasa pembuatan website profesional dengan desain modern, responsif, dan SEO-friendly. Wujudkan website impian Anda dengan harga terjangkau dan kualitas terbaik.

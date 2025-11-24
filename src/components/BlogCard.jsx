@@ -7,13 +7,13 @@ const BlogCard = ({ title, excerpt, image, category, date, slug }) => {
 
   return (
     <div 
-      className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 cursor-pointer"
+      className="group relative bg-gradient-to-br from-slate-100 to-slate-50 dark:from-white/5 dark:to-white/[0.02] backdrop-blur-xl rounded-2xl overflow-hidden border border-slate-300 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 cursor-pointer"
       data-aos="fade-up"
       onClick={() => navigate(`/blog/${slug}`)}
     >
       {/* Image */}
       <div className="relative h-48 sm:h-56 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#030014] via-transparent to-transparent z-10" />
         <img 
           src={image} 
           alt={title}
@@ -31,23 +31,23 @@ const BlogCard = ({ title, excerpt, image, category, date, slug }) => {
       {/* Content */}
       <div className="p-6 space-y-4">
         {/* Date */}
-        <div className="flex items-center gap-2 text-gray-400 text-sm">
+        <div className="flex items-center gap-2 text-slate-600 dark:text-gray-400 text-sm">
           <Calendar className="w-4 h-4" />
           <span>{date}</span>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-white group-hover:bg-gradient-to-r group-hover:from-[#6366f1] group-hover:to-[#a855f7] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 line-clamp-2">
+        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-[#6366f1] group-hover:to-[#a855f7] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 line-clamp-2">
           {title}
         </h3>
 
         {/* Excerpt */}
-        <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+        <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3">
           {excerpt}
         </p>
 
         {/* Read More Link */}
-        <div className="pt-4 border-t border-white/5">
+        <div className="pt-4 border-t border-slate-200 dark:border-white/5">
           <button className="group/btn flex items-center gap-2 text-sm font-medium bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent hover:gap-3 transition-all duration-300">
             Baca Selengkapnya
             <ArrowRight className="w-4 h-4 text-purple-400 group-hover/btn:translate-x-1 transition-transform" />

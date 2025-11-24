@@ -93,7 +93,7 @@ const Blog = () => {
             </div>
             
             <div className="text-center mt-12" data-aos="fade-up">
-              <a href="/all-blogs" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 font-semibold group">
+              <a href="/all-blogs" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 font-semibold group shadow-md">
                 <span>View All Blog</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -106,7 +106,7 @@ const Blog = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6">
               <Newspaper className="w-10 h-10 text-gray-500" />
             </div>
-            <p className="text-gray-400 text-lg">Belum ada artikel tersedia</p>
+            <p className="text-slate-600 dark:text-gray-400 text-lg">Belum ada artikel tersedia</p>
           </div>
         )}
 
@@ -117,24 +117,24 @@ const Blog = () => {
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6366f1]/20 to-[#a855f7]/20 border border-white/10">
                 <TrendingUp className="w-7 h-7 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold text-white">Meningkatkan SEO</h3>
-              <p className="text-gray-400 text-sm">Konten berkualitas membantu website Anda lebih mudah ditemukan di mesin pencari</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Meningkatkan SEO</h3>
+              <p className="text-slate-600 dark:text-gray-400 text-sm">Konten berkualitas membantu website Anda lebih mudah ditemukan di mesin pencari</p>
             </div>
             
             <div className="text-center space-y-3">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6366f1]/20 to-[#a855f7]/20 border border-white/10">
                 <Newspaper className="w-7 h-7 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold text-white">Konten Berkualitas</h3>
-              <p className="text-gray-400 text-sm">Artikel informatif yang memberikan nilai tambah untuk pengunjung website Anda</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Konten Berkualitas</h3>
+              <p className="text-slate-600 dark:text-gray-400 text-sm">Artikel informatif yang memberikan nilai tambah untuk pengunjung website Anda</p>
             </div>
             
             <div className="text-center space-y-3">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6366f1]/20 to-[#a855f7]/20 border border-white/10">
                 <TrendingUp className="w-7 h-7 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold text-white">Traffic Organik</h3>
-              <p className="text-gray-400 text-sm">Tingkatkan pengunjung website melalui pencarian organik Google</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Traffic Organik</h3>
+              <p className="text-slate-600 dark:text-gray-400 text-sm">Tingkatkan pengunjung website melalui pencarian organik Google</p>
             </div>
           </div>
         </div>

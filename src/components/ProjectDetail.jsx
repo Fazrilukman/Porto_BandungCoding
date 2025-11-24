@@ -25,7 +25,7 @@ const TechBadge = ({ tech }) => {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
       <div className="relative flex items-center gap-1.5 md:gap-2">
         <Icon className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-        <span className="text-xs md:text-sm font-medium text-blue-300/90 group-hover:text-blue-200 transition-colors">
+        <span className="text-xs md:text-sm font-medium text-blue-600 dark:text-blue-300/90 group-hover:text-blue-700 dark:group-hover:text-blue-200 transition-colors">
           {tech}
         </span>
       </div>
@@ -40,7 +40,7 @@ const FeatureItem = ({ feature }) => {
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full blur group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
         <div className="relative w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-125 transition-transform duration-300" />
       </div>
-      <span className="text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
+      <span className="text-sm md:text-base text-slate-700 dark:text-gray-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
         {feature}
       </span>
     </li>
@@ -62,7 +62,7 @@ const ProjectStats = ({ project }) => {
         </div>
         <div className="flex-grow">
           <div className="text-lg md:text-xl font-semibold text-blue-200">{techStackCount}</div>
-          <div className="text-[10px] md:text-xs text-gray-400">Total Teknologi</div>
+          <div className="text-[10px] md:text-xs text-slate-600 dark:text-gray-400">Total Teknologi</div>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ const ProjectStats = ({ project }) => {
         </div>
         <div className="flex-grow">
           <div className="text-lg md:text-xl font-semibold text-purple-200">{featuresCount}</div>
-          <div className="text-[10px] md:text-xs text-gray-400">Fitur Utama</div>
+          <div className="text-[10px] md:text-xs text-slate-600 dark:text-gray-400">Fitur Utama</div>
         </div>
       </div>
 
@@ -151,17 +151,17 @@ const ProjectDetails = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#030014] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center">
         <div className="text-center space-y-6 animate-fadeIn">
           <div className="w-16 h-16 md:w-24 md:h-24 mx-auto border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
-          <h2 className="text-xl md:text-3xl font-bold text-white">Loading Project...</h2>
+          <h2 className="text-xl md:text-3xl font-bold">Loading Project...</h2>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#030014] px-[2%] sm:px-0 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] px-[2%] sm:px-0 relative overflow-hidden">
       {/* Background animations remain unchanged */}
       <div className="fixed inset-0">
         <div className="absolute -inset-[10px] opacity-20">
@@ -177,22 +177,22 @@ const ProjectDetails = () => {
           <div className="flex items-center space-x-2 md:space-x-4 mb-8 md:mb-12 animate-fadeIn">
             <button
               onClick={() => navigate(-1)}
-              className="group inline-flex items-center space-x-1.5 md:space-x-2 px-3 md:px-5 py-2 md:py-2.5 bg-white/5 backdrop-blur-xl rounded-xl text-white/90 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 text-sm md:text-base"
+              className="group inline-flex items-center space-x-1.5 md:space-x-2 px-3 md:px-5 py-2 md:py-2.5 bg-slate-200 dark:bg-white/5 backdrop-blur-xl rounded-xl text-slate-900 dark:text-white/90 hover:bg-slate-300 dark:hover:bg-white/10 transition-all duration-300 border border-slate-300 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/20 text-sm md:text-base cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
               <span>Back</span>
             </button>
-            <div className="flex items-center space-x-1 md:space-x-2 text-sm md:text-base text-white/50">
+            <div className="flex items-center space-x-1 md:space-x-2 text-sm md:text-base text-slate-600 dark:text-white/50">
               <span>Projects</span>
               <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
-              <span className="text-white/90 truncate">{project.Title}</span>
+              <span className="text-slate-900 dark:text-white/90 truncate">{project.Title}</span>
             </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 md:gap-16">
             <div className="space-y-6 md:space-y-10 animate-slideInLeft">
               <div className="space-y-4 md:space-y-6">
-                <h1 className="text-3xl md:text-6xl font-bold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent leading-tight">
+                <h1 className="text-3xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-200 dark:via-purple-200 dark:to-pink-200 bg-clip-text text-transparent leading-tight">
                   {project.Title}
                 </h1>
                 <div className="relative h-1 w-16 md:w-24">
@@ -202,7 +202,7 @@ const ProjectDetails = () => {
               </div>
 
               <div className="prose prose-invert max-w-none">
-                <p className="text-base md:text-lg text-gray-300/90 leading-relaxed">
+                <p className="text-base md:text-lg text-slate-700 dark:text-gray-300/90 leading-relaxed">
                   {project.Description}
                 </p>
               </div>
@@ -216,9 +216,9 @@ const ProjectDetails = () => {
                     href={project.Github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-purple-600/10 to-pink-600/10 hover:from-purple-600/20 hover:to-pink-600/20 text-purple-300 rounded-xl transition-all duration-300 border border-purple-500/20 hover:border-purple-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
+                    className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-600/10 dark:to-pink-600/10 hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-600/20 dark:hover:to-pink-600/20 text-purple-700 dark:text-purple-300 rounded-xl transition-all duration-300 border border-purple-300 dark:border-purple-500/20 hover:border-purple-400 dark:hover:border-purple-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
                   >
-                    <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-purple-600/10 to-pink-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
+                    <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-600/10 dark:to-pink-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
                     <Github className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
                     <span className="relative font-medium">View Source</span>
                   </a>
@@ -226,8 +226,8 @@ const ProjectDetails = () => {
               </div>
 
               <div className="space-y-4 md:space-y-6">
-                <h3 className="text-lg md:text-xl font-semibold text-white/90 mt-[3rem] md:mt-0 flex items-center gap-2 md:gap-3">
-                  <Code2 className="w-4 h-4 md:w-5 md:h-5 text-blue-400" />
+                <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white/90 mt-[3rem] md:mt-0 flex items-center gap-2 md:gap-3">
+                  <Code2 className="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400" />
                   Technologies Used
                 </h3>
                 {project.TechStack.length > 0 ? (
@@ -237,7 +237,7 @@ const ProjectDetails = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm md:text-base text-gray-400 opacity-50">No technologies added.</p>
+                  <p className="text-sm md:text-base text-slate-500 dark:text-gray-400 opacity-50">No technologies added.</p>
                 )}
               </div>
             </div>
@@ -245,19 +245,19 @@ const ProjectDetails = () => {
             <div className="space-y-6 md:space-y-10 animate-slideInRight">
               {/* Main Image with Gallery */}
               <div className="space-y-4">
-                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 dark:from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <img
                     src={project.Images && project.Images.length > 0 ? project.Images[currentImageIndex] : project.Img}
                     alt={`${project.Title} - Image ${currentImageIndex + 1}`}
                     className="w-full object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
                     onLoad={() => setIsImageLoaded(true)}
                   />
-                  <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
+                  <div className="absolute inset-0 border-2 border-slate-300/0 dark:border-white/0 group-hover:border-slate-300/30 dark:group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
                   
                   {/* Image Counter */}
                   {project.Images && project.Images.length > 1 && (
-                    <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm">
+                    <div className="absolute top-4 right-4 bg-slate-800/80 dark:bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm">
                       {currentImageIndex + 1} / {project.Images.length}
                     </div>
                   )}
@@ -273,7 +273,7 @@ const ProjectDetails = () => {
                         className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                           currentImageIndex === index 
                             ? 'border-purple-500 ring-2 ring-purple-500/50' 
-                            : 'border-white/10 hover:border-white/30'
+                            : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/30'
                         }`}
                       >
                         <img
@@ -291,9 +291,9 @@ const ProjectDetails = () => {
               </div>
 
               {/* Fitur Utama */}
-              <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl p-8 border border-white/10 space-y-6 hover:border-white/20 transition-colors duration-300 group">
-                <h3 className="text-xl font-semibold text-white/90 flex items-center gap-3">
-                  <Star className="w-5 h-5 text-yellow-400 group-hover:rotate-[20deg] transition-transform duration-300" />
+              <div className="bg-slate-50 dark:bg-white/[0.02] backdrop-blur-xl rounded-2xl p-8 border border-slate-200 dark:border-white/10 space-y-6 hover:border-slate-300 dark:hover:border-white/20 transition-colors duration-300 group">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white/90 flex items-center gap-3">
+                  <Star className="w-5 h-5 text-yellow-500 dark:text-yellow-400 group-hover:rotate-[20deg] transition-transform duration-300" />
                   Key Features
                 </h3>
                 {project.Features.length > 0 ? (
@@ -303,7 +303,7 @@ const ProjectDetails = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 opacity-50">No features added.</p>
+                  <p className="text-slate-500 dark:text-gray-400 opacity-50">No features added.</p>
                 )}
               </div>
             </div>

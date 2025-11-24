@@ -112,7 +112,7 @@ const Komentar = () => {
                         </div>
                         <button
                             type="submit"
-                            className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg font-semibold text-white transition-all duration-300"
+                            className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#6366f1] to-[#a855f7] hover:shadow-lg hover:shadow-purple-500/50 rounded-xl font-semibold text-white transition-all duration-300 shadow-md"
                         >
                             <Send size={20} />
                             Post Comment

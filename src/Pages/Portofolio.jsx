@@ -298,10 +298,10 @@ export default function FullWidthTabs() {
       {/* Auto Scrolling Project Showcase */}
       <div className="w-full mb-16" data-aos="fade-up">
         <div className="mb-8 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
             Our Latest Projects
           </h3>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-600 dark:text-slate-400 text-sm">
             Explore our recent work and innovations
           </p>
         </div>
@@ -449,7 +449,7 @@ export default function FullWidthTabs() {
               {projects.length === 0 ? (
                 <div className="text-center py-20">
                   <Code size={64} className="mx-auto mb-4 text-purple-400 opacity-50" />
-                  <p className="text-slate-400 text-lg">No projects yet. Add your first project in the <a href="/admin" className="text-purple-400 hover:text-purple-300 underline">Admin Dashboard</a>!</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-lg">No projects yet. Add your first project in the <a href="/admin" className="text-purple-400 hover:text-purple-300 underline">Admin Dashboard</a>!</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -470,18 +470,18 @@ export default function FullWidthTabs() {
                           </div>
                         )}
                         <div className="p-6">
-                          <h3 className="text-xl font-bold mb-2 text-white">{project.name || project.title}</h3>
-                          <p className="text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
+                          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{project.name || project.title}</h3>
+                          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
                           <div className="flex flex-wrap gap-2 mb-4">
                             {(project.techStack || []).slice(0, 3).map((tech, i) => (
-                              <span key={i} className="text-xs px-2 py-1 bg-purple-500/20 text-purple-300 rounded-full">
+                              <span key={i} className="text-xs px-2 py-1 bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
                                 {tech}
                               </span>
                             ))}
                           </div>
                           <a 
                             href={`/project/${project.id}`}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group shadow-md"
                           >
                             View Project
                             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -499,7 +499,7 @@ export default function FullWidthTabs() {
               <div className="mt-8 w-full flex justify-center">
                 <a
                   href="/all-projects"
-                  className="px-8 py-3 text-white text-base font-semibold bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-2 group"
+                  className="px-8 py-3 text-white text-base font-semibold bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-2 group shadow-md"
                 >
                   <span>View All Projects</span>
                   <svg
@@ -574,7 +574,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Landing Page')}
-              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 border-2 border-purple-200 dark:border-purple-500/30 font-semibold hover:bg-purple-50 dark:hover:bg-purple-500/10 transition-all duration-300 flex items-center justify-center"
+              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center shadow-md"
             >
               Pilih Landing Page
             </button>
@@ -678,7 +678,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Custom Website')}
-              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
+              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center shadow-md"
             >
               Konsultasi Gratis
             </button>
