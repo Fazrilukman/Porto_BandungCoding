@@ -279,12 +279,21 @@ export default function FullWidthTabs() {
     handleCloseModal();
   };
 
+  const buildWhatsappLink = (defaultMessage) => {
+    const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
+    const whatsappConfig = savedWhatsappConfig 
+      ? JSON.parse(savedWhatsappConfig) 
+      : { phoneNumber: '6281234567890', businessName: 'BandungCoding' };
+    const message = defaultMessage || `Halo ${whatsappConfig.businessName}, saya ingin konsultasi mengenai pembuatan website.`;
+    return `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
+  };
+
   const displayedProjects = projects.slice(0, 3);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
   // Sisa dari komponen (return statement) tidak ada perubahan
   return (
-    <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portofolio">
+    <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden" id="Portofolio">
       
       {/* Auto Scrolling Project Showcase */}
       <div className="w-full mb-16" data-aos="fade-up">
@@ -529,7 +538,7 @@ export default function FullWidthTabs() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {/* Paket Landing Page */}
           <div 
-            className="relative bg-white dark:bg-gray-900/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+            className="relative bg-white dark:bg-gray-900/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
             data-aos="fade-up"
             data-aos-delay="100"
           >
@@ -538,12 +547,12 @@ export default function FullWidthTabs() {
             
             <div className="mb-6">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-gray-900 dark:text-white">Rp 699K</span>
+                <span className="text-4xl font-bold text-gray-900 dark:text-white">Rp 250K</span>
                 <span className="text-slate-500 text-sm">one-time</span>
               </div>
             </div>
             
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 flex-1">
               {[
                 'Desain Modern & Responsif',
                 'Optimasi SEO On-Page',
@@ -565,7 +574,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Landing Page')}
-              className="w-full h-12 py-3 px-6 rounded-xl bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 border-2 border-purple-200 dark:border-purple-500/30 font-semibold hover:bg-purple-50 dark:hover:bg-purple-500/10 transition-all duration-300 flex items-center justify-center"
+              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 border-2 border-purple-200 dark:border-purple-500/30 font-semibold hover:bg-purple-50 dark:hover:bg-purple-500/10 transition-all duration-300 flex items-center justify-center"
             >
               Pilih Landing Page
             </button>
@@ -573,7 +582,7 @@ export default function FullWidthTabs() {
 
           {/* Paket Company Profile - Most Popular */}
           <div 
-            className="relative rounded-2xl p-8 shadow-2xl scale-105 bg-gradient-to-br from-purple-600 to-blue-600"
+            className="relative rounded-2xl p-8 shadow-2xl scale-105 bg-gradient-to-br from-purple-600 to-blue-600 flex flex-col h-full"
             data-aos="fade-up"
             data-aos-delay="200"
           >
@@ -588,12 +597,12 @@ export default function FullWidthTabs() {
             
             <div className="mb-6">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-white">Rp 1.999K</span>
+                <span className="text-4xl font-bold text-white">Rp 1000K</span>
                 <span className="text-purple-100 text-sm">one-time</span>
               </div>
             </div>
             
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 flex-1">
               {[
                 'Desain Premium & Responsif',
                 'Full SEO Optimization',
@@ -620,7 +629,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Company Profile')}
-              className="w-full h-12 py-3 px-6 rounded-xl bg-white text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-300 shadow-lg flex items-center justify-center"
+              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-white text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-300 shadow-lg flex items-center justify-center"
             >
               Pilih Company Profile
             </button>
@@ -628,7 +637,7 @@ export default function FullWidthTabs() {
 
           {/* Paket Custom Website */}
           <div 
-            className="relative bg-white dark:bg-gray-900/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+            className="relative bg-white dark:bg-gray-900/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
             data-aos="fade-up"
             data-aos-delay="300"
           >
@@ -637,12 +646,12 @@ export default function FullWidthTabs() {
             
             <div className="mb-6">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-gray-900 dark:text-white">Rp 2.999K</span>
+                <span className="text-4xl font-bold text-gray-900 dark:text-white">Rp 100K</span>
                 <span className="text-slate-500 text-sm">starts from</span>
               </div>
             </div>
             
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 flex-1">
               {[
                 'Analisis Kebutuhan Bisnis',
                 'Custom Design Premium',
@@ -669,7 +678,7 @@ export default function FullWidthTabs() {
 
             <button 
               onClick={() => handleOpenModal('Custom Website')}
-              className="w-full h-12 py-3 px-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
+              className="mt-auto w-full h-12 py-3 px-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
             >
               Konsultasi Gratis
             </button>
@@ -677,15 +686,21 @@ export default function FullWidthTabs() {
         </div>
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
-          Butuh solusi khusus? <button onClick={() => {
-            const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
-            const whatsappConfig = savedWhatsappConfig 
-              ? JSON.parse(savedWhatsappConfig) 
-              : { phoneNumber: '6281234567890', businessName: 'BandungCoding' };
-            const message = `Halo ${whatsappConfig.businessName}, saya ingin konsultasi mengenai pembuatan website custom.`;
-            const whatsappUrl = `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-          }} className="text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300">Konsultasikan kebutuhan Anda</button>
+          Butuh solusi khusus?{" "}
+          <a
+            href={buildWhatsappLink(`Halo ${formData.nama || 'Admin'}, saya ingin konsultasi mengenai pembuatan website custom.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              e.stopPropagation();
+              // fallback open to ensure click works even if href blocked
+              const url = buildWhatsappLink(`Halo ${formData.nama || 'Admin'}, saya ingin konsultasi mengenai pembuatan website custom.`);
+              window.open(url, '_blank');
+            }}
+            className="inline-block text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300 pointer-events-auto relative z-10"
+          >
+            Konsultasikan kebutuhan Anda
+          </a>
         </p>
       </div>
 
@@ -702,9 +717,9 @@ export default function FullWidthTabs() {
                   <div className="flex justify-between text-sm">
                     <span className="text-purple-100">Harga:</span>
                     <span className="font-bold">
-                      {selectedPackage === 'Landing Page' ? 'Rp 699K' : 
-                       selectedPackage === 'Company Profile' ? 'Rp 1.999K' : 
-                       selectedPackage === 'Custom Website' ? 'Rp 2.999K' : 'Custom'}
+                      {selectedPackage === 'Landing Page' ? 'Rp 250K' : 
+                       selectedPackage === 'Company Profile' ? 'Rp 1000K' : 
+                       selectedPackage === 'Custom Website' ? 'Rp 100K' : 'Custom'}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">

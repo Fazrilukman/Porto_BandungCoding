@@ -17,6 +17,7 @@ import Admin from "./Pages/Admin";
 import Blog from "./Pages/Blog";
 import BlogDetail from "./Pages/BlogDetail";
 import AllProjects from "./Pages/AllProjects";
+import AllBlogs from "./Pages/AllBlogs";
 
 const LandingPage = () => {
   useEffect(() => {
@@ -57,6 +58,32 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    const applyFavicon = () => {
+      let profile = null;
+      try {
+        const stored = localStorage.getItem('supercode_profile');
+        if (stored) profile = JSON.parse(stored);
+      } catch (err) {
+        profile = null;
+      }
+
+      const iconUrl = profile?.logoUrl || '/favicon.svg';
+      let link = document.querySelector('link[rel="icon"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+      }
+      link.type = 'image/png';
+      link.href = iconUrl;
+    };
+
+    applyFavicon();
+    window.addEventListener('storage', applyFavicon);
+    return () => window.removeEventListener('storage', applyFavicon);
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -64,6 +91,7 @@ function App() {
         <Route path="/project/:id" element={<ProjectPageLayout />} />
         <Route path="/all-projects" element={<AllProjects />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/all-blogs" element={<AllBlogs />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFoundPage />} /> {/* Ini route 404 */}
       </Routes>

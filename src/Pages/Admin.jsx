@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Image as ImageIcon, LogIn, LogOut, Lock, User } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -54,11 +54,55 @@ const Admin = () => {
     slug: '',
     tags: []
   });
+  const [profile, setProfile] = useState({
+    brandName: 'BandungCoding',
+    logoUrl: '',
+    email: 'info@bandungcoding.com',
+    phone: '+62 812-3456-7890',
+    location: 'Indonesia',
+    instagram: 'https://www.instagram.com/',
+    tiktok: 'https://www.tiktok.com/',
+    whatsapp: 'https://wa.me/6281234567890',
+    youtube: 'https://www.youtube.com/'
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+
+  const ADMIN_CREDENTIALS = { username: 'bandungcoding', password: 'fahmifazri123' };
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
-    loadData();
+    const storedAuth = localStorage.getItem('admin_logged_in');
+    if (storedAuth === 'true') {
+      setIsAuthenticated(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadData();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setLoginError('');
+    const username = loginForm.username.trim();
+    const password = loginForm.password.trim();
+
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+      setIsAuthenticated(true);
+      localStorage.setItem('admin_logged_in', 'true');
+    } else {
+      setLoginError('Username atau password salah.');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('admin_logged_in');
+  };
 
   const loadData = () => {
     // Load from localStorage
@@ -67,6 +111,7 @@ const Admin = () => {
     const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
     const savedCarousel = localStorage.getItem('supercode_carousel');
     const savedBlogs = localStorage.getItem('bandungcoding_blogs');
+    const savedProfile = localStorage.getItem('supercode_profile');
     
     if (savedProjects) {
       setProjects(JSON.parse(savedProjects));
@@ -153,6 +198,24 @@ const Admin = () => {
       };
       setWhatsappConfig(defaultConfig);
       localStorage.setItem('supercode_whatsapp', JSON.stringify(defaultConfig));
+    }
+
+    if (savedProfile) {
+      setProfile(JSON.parse(savedProfile));
+    } else {
+      const defaultProfile = {
+        brandName: 'BandungCoding',
+        logoUrl: '',
+        email: 'info@bandungcoding.com',
+        phone: '+62 812-3456-7890',
+        location: 'Indonesia',
+        instagram: 'https://www.instagram.com/',
+        tiktok: 'https://www.tiktok.com/',
+        whatsapp: 'https://wa.me/6281234567890',
+        youtube: 'https://www.youtube.com/'
+      };
+      setProfile(defaultProfile);
+      localStorage.setItem('supercode_profile', JSON.stringify(defaultProfile));
     }
 
     const savedComments = localStorage.getItem('supercode_comments');
@@ -305,6 +368,32 @@ const Admin = () => {
     } else {
       localStorage.setItem('supercode_techstack', JSON.stringify(data));
     }
+  };
+
+  const handleSaveProfile = () => {
+    localStorage.setItem('supercode_profile', JSON.stringify(profile));
+    alert('Profile disimpan!');
+  };
+
+  const handleProfileLogoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Harap pilih file gambar');
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Ukuran gambar maksimal 2MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfile({ ...profile, logoUrl: reader.result });
+    };
+    reader.readAsDataURL(file);
   };
 
   // Project CRUD
@@ -623,9 +712,72 @@ const Admin = () => {
     setImageFile(null);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#030014] flex items-center justify-center px-4 py-12 text-white">
+        <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl shadow-lg shadow-purple-500/10" data-aos="zoom-in">
+          <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6366f1]/20 to-[#a855f7]/20 border border-white/10 mb-6">
+            <Lock className="w-8 h-8 text-purple-400" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2 text-center">Admin Login</h1>
+          <p className="text-slate-400 text-sm text-center mb-6">Masuk dengan kredensial admin untuk melanjutkan.</p>
+          <form className="space-y-4" onSubmit={handleLogin}>
+            <div>
+              <label className="text-sm text-slate-300 block mb-2">Username</label>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus-within:border-purple-500/50 transition-all">
+                <User className="w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  value={loginForm.username}
+                  onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                  className="bg-transparent outline-none flex-1 text-white text-sm"
+                  placeholder="Masukkan username"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm text-slate-300 block mb-2">Password</label>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus-within:border-purple-500/50 transition-all">
+                <Lock className="w-4 h-4 text-slate-400" />
+                <input
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                  className="bg-transparent outline-none flex-1 text-white text-sm"
+                  placeholder="Masukkan password"
+                />
+              </div>
+            </div>
+
+            {loginError && <p className="text-red-400 text-sm">{loginError}</p>}
+
+            <button
+              type="submit"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl font-semibold hover:opacity-90 transition"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Login Admin</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#030014] text-white pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
+        <div className="flex justify-end mb-6" data-aos="fade-down">
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12" data-aos="fade-up">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
@@ -686,12 +838,22 @@ const Admin = () => {
           >
             WhatsApp API
           </button>
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              activeTab === 'profile'
+                ? 'bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white'
+                : 'bg-white/10 text-slate-300 hover:bg-white/20'
+            }`}
+          >
+            Profile & Footer
+          </button>
         </div>
 
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10" data-aos="fade-up">
           {/* Add Button */}
-          {activeTab !== 'whatsapp' && activeTab !== 'comments' && (
+          {activeTab !== 'whatsapp' && activeTab !== 'comments' && activeTab !== 'profile' && (
             <div className="flex justify-end mb-6">
               <button
                 onClick={
@@ -708,6 +870,130 @@ const Admin = () => {
                   'Blog Article'
                 }
               </button>
+            </div>
+          )}
+
+          {activeTab === 'profile' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold mb-2 text-white">Upload Logo</label>
+                  <div className="flex items-center gap-4">
+                    <label className="px-4 py-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors text-sm font-semibold">
+                      Pilih File
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleProfileLogoChange}
+                      />
+                    </label>
+                    {profile.logoUrl && (
+                      <div className="flex items-center gap-3">
+                        <img src={profile.logoUrl} alt="Logo" className="w-12 h-12 rounded-lg object-cover border border-white/10" />
+                        <button
+                          onClick={() => setProfile({ ...profile, logoUrl: '' })}
+                          className="text-sm text-red-400 hover:text-red-300"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Nama Brand</label>
+                  <input
+                    type="text"
+                    value={profile.brandName}
+                    onChange={(e) => setProfile({ ...profile, brandName: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="BandungCoding"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Email</label>
+                  <input
+                    type="email"
+                    value={profile.email}
+                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="info@bandungcoding.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">No. Telp</label>
+                  <input
+                    type="text"
+                    value={profile.phone}
+                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="+62 812-3456-7890"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Wilayah</label>
+                  <input
+                    type="text"
+                    value={profile.location}
+                    onChange={(e) => setProfile({ ...profile, location: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="Indonesia"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Instagram</label>
+                  <input
+                    type="url"
+                    value={profile.instagram}
+                    onChange={(e) => setProfile({ ...profile, instagram: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.instagram.com/..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">TikTok</label>
+                  <input
+                    type="url"
+                    value={profile.tiktok}
+                    onChange={(e) => setProfile({ ...profile, tiktok: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.tiktok.com/..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">WhatsApp Link</label>
+                  <input
+                    type="url"
+                    value={profile.whatsapp}
+                    onChange={(e) => setProfile({ ...profile, whatsapp: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://wa.me/62xxxxxxxxxx"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">YouTube</label>
+                  <input
+                    type="url"
+                    value={profile.youtube}
+                    onChange={(e) => setProfile({ ...profile, youtube: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.youtube.com/..."
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handleSaveProfile}
+                  className="px-6 py-3 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                >
+                  Simpan Profile & Footer
+                </button>
+              </div>
             </div>
           )}
 
@@ -1068,9 +1354,118 @@ const Admin = () => {
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none"
                     placeholder="https://example.com"
                   />
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'profile' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Nama Brand</label>
+                  <input
+                    type="text"
+                    value={profile.brandName}
+                    onChange={(e) => setProfile({ ...profile, brandName: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="BandungCoding"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Logo URL</label>
+                  <input
+                    type="text"
+                    value={profile.logoUrl}
+                    onChange={(e) => setProfile({ ...profile, logoUrl: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://example.com/logo.png"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Email</label>
+                  <input
+                    type="email"
+                    value={profile.email}
+                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="info@bandungcoding.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">No. Telp</label>
+                  <input
+                    type="text"
+                    value={profile.phone}
+                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="+62 812-3456-7890"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Wilayah</label>
+                  <input
+                    type="text"
+                    value={profile.location}
+                    onChange={(e) => setProfile({ ...profile, location: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="Indonesia"
+                  />
                 </div>
               </div>
-            )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">Instagram</label>
+                  <input
+                    type="url"
+                    value={profile.instagram}
+                    onChange={(e) => setProfile({ ...profile, instagram: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.instagram.com/..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">TikTok</label>
+                  <input
+                    type="url"
+                    value={profile.tiktok}
+                    onChange={(e) => setProfile({ ...profile, tiktok: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.tiktok.com/..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">WhatsApp Link</label>
+                  <input
+                    type="url"
+                    value={profile.whatsapp}
+                    onChange={(e) => setProfile({ ...profile, whatsapp: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://wa.me/62xxxxxxxxxx"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-white">YouTube</label>
+                  <input
+                    type="url"
+                    value={profile.youtube}
+                    onChange={(e) => setProfile({ ...profile, youtube: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-purple-500 focus:outline-none text-white"
+                    placeholder="https://www.youtube.com/..."
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handleSaveProfile}
+                  className="px-6 py-3 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                >
+                  Simpan Profile & Footer
+                </button>
+              </div>
+            </div>
+          )}
 
             {activeTab === 'carousel' && (
               <div className="space-y-4">

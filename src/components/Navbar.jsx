@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState("Home");
+    const [profile, setProfile] = useState(null);
+    const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
     
     const navItems = [
         { href: "#Home", label: "Home" },
@@ -53,6 +55,29 @@ const Navbar = () => {
         }
     }, [isOpen]);
 
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem('supercode_profile');
+            if (stored) setProfile(JSON.parse(stored));
+        } catch (err) {
+            // ignore
+        }
+    }, []);
+
+    useEffect(() => {
+        const root = document.documentElement;
+        if (theme === 'light') {
+            root.classList.add('light');
+        } else {
+            root.classList.remove('light');
+        }
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    };
+
     const scrollToSection = (e, href) => {
         e.preventDefault();
         
@@ -92,9 +117,18 @@ const Navbar = () => {
                         <a
                             href="#Home"
                             onClick={(e) => scrollToSection(e, "#Home")}
-                            className="text-xl font-bold bg-gradient-to-r from-[#a855f7] to-[#6366f1] bg-clip-text text-transparent"
+                            className="flex items-center gap-2 text-xl font-bold"
                         >
-                            BandungCoding
+                            {profile?.logoUrl && (
+                                <img
+                                    src={profile.logoUrl}
+                                    alt="Logo"
+                                    className="w-8 h-8 rounded-lg object-cover border border-white/10"
+                                />
+                            )}
+                            <span className="bg-gradient-to-r from-[#a855f7] to-[#6366f1] bg-clip-text text-transparent">
+                                {profile?.brandName || 'BandungCoding'}
+                            </span>
                         </a>
                     </div>
         
@@ -126,9 +160,16 @@ const Navbar = () => {
                                     />
                                 </a>
                             ))}
+                            <button
+                              onClick={toggleTheme}
+                              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[#e2d3fd] hover:text-white hover:bg-white/10 transition-colors"
+                              title="Toggle theme"
+                            >
+                              {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                            </button>
                         </div>
                     </div>
-        
+
                     {/* Mobile Menu Button */}
                     <div className="md:hidden">
                         <button
@@ -175,6 +216,13 @@ const Navbar = () => {
                             {item.label}
                         </a>
                     ))}
+                    <button
+                      onClick={toggleTheme}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-lg font-medium text-[#e2d3fd] hover:text-white bg-white/5 border border-white/10 rounded-lg"
+                    >
+                      {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                      {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                    </button>
                 </div>
             </div>
         </nav>

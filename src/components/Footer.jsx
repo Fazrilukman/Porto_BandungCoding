@@ -5,6 +5,16 @@ import { FaTiktok } from 'react-icons/fa';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const profile = (() => {
+    try {
+      const stored = localStorage.getItem('supercode_profile');
+      if (stored) return JSON.parse(stored);
+    } catch (err) {
+      // ignore
+    }
+    return null;
+  })();
+
   const footerLinks = {
     company: [
       { name: 'About Us', href: '#About' },
@@ -29,25 +39,25 @@ const Footer = () => {
   const socialLinks = [
     { 
       icon: Instagram, 
-      link: 'https://www.instagram.com/',
+      link: profile?.instagram || 'https://www.instagram.com/',
       name: 'Instagram',
       color: 'hover:text-[#E4405F]'
     },
     { 
       icon: FaTiktok, 
-      link: 'https://www.tiktok.com/',
+      link: profile?.tiktok || 'https://www.tiktok.com/',
       name: 'TikTok',
       color: 'hover:text-white'
     },
     { 
       icon: MessageCircle, 
-      link: 'https://wa.me/6281234567890',
+      link: profile?.whatsapp || 'https://wa.me/6281234567890',
       name: 'WhatsApp',
       color: 'hover:text-[#25D366]'
     },
     { 
       icon: Youtube, 
-      link: 'https://www.youtube.com/',
+      link: profile?.youtube || 'https://www.youtube.com/',
       name: 'YouTube',
       color: 'hover:text-[#FF0000]'
     },
@@ -64,7 +74,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-[#030014] border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-[var(--bg-primary)] text-[var(--text-primary)] border-t border-white/10 overflow-hidden transition-colors">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#6366f1]/5 to-[#a855f7]/5 pointer-events-none" />
       
@@ -75,42 +85,51 @@ const Footer = () => {
             
             {/* Company Info */}
             <div className="space-y-6">
-              <div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent mb-2">
-                  BandungCoding
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  Tim developer profesional yang berdedikasi menciptakan solusi digital inovatif untuk bisnis Anda.
-                </p>
+              <div className="flex items-center gap-3">
+                {profile?.logoUrl && (
+                  <img
+                    src={profile.logoUrl}
+                    alt="Logo"
+                    className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                  />
+                )}
+                <div>
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent mb-1">
+                    {profile?.brandName || 'BandungCoding'}
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    Tim developer profesional yang berdedikasi menciptakan solusi digital inovatif untuk bisnis Anda.
+                  </p>
+                </div>
               </div>
               
               {/* Contact Info */}
               <div className="space-y-3">
                 <a 
-                  href="mailto:info@bandungcoding.com" 
+                  href={`mailto:${profile?.email || 'info@bandungcoding.com'}`} 
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group"
                 >
                   <div className="p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
                     <Mail className="w-4 h-4" />
                   </div>
-                  <span className="text-sm">info@bandungcoding.com</span>
+                  <span className="text-sm">{profile?.email || 'info@bandungcoding.com'}</span>
                 </a>
                 
                 <a 
-                  href="tel:+6281234567890" 
+                  href={`tel:${(profile?.phone || '+62 812-3456-7890').replace(/\\s+/g, '')}`} 
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group"
                 >
                   <div className="p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
                     <Phone className="w-4 h-4" />
                   </div>
-                  <span className="text-sm">+62 812-3456-7890</span>
+                  <span className="text-sm">{profile?.phone || '+62 812-3456-7890'}</span>
                 </a>
                 
                 <div className="flex items-start gap-3 text-gray-400">
                   <div className="p-2 bg-white/5 rounded-lg mt-0.5">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  <span className="text-sm">Indonesia</span>
+                  <span className="text-sm">{profile?.location || 'Indonesia'}</span>
                 </div>
               </div>
             </div>
@@ -206,7 +225,7 @@ const Footer = () => {
                   href="https://bandungcoding.com/" 
                   className="text-purple-400 hover:text-purple-300 transition-colors font-semibold"
                 >
-                  BandungCoding
+                  {profile?.brandName || 'BandungCoding'}
                 </a>
                 . Made with 
                 <Heart className="w-4 h-4 text-red-500 fill-current mx-1 animate-pulse" />

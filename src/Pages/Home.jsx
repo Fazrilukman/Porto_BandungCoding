@@ -24,18 +24,18 @@ const MainTitle = memo(() => (
     <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold tracking-tight flex flex-col md:flex-row items-center justify-center md:gap-4">
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-[#1e293b] via-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent">
           Bandung
         </span>
       </span>
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent">
           Coding
         </span>
       </span>
     </h1>
-    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-light mt-4">
+    <p className="text-lg sm:text-xl md:text-2xl text-[var(--text-primary)] font-light mt-4">
       Jasa Pembuatan Website Profesional
     </p>
   </div>
@@ -48,15 +48,15 @@ const TechStack = memo(({ tech }) => (
 ));
 
 const CTAButton = memo(({ onClick, text, icon: Icon }) => (
-  <button onClick={onClick} className="group relative min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
+  <button onClick={onClick} className="group relative w-full sm:w-auto min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
     <div className="absolute -inset-1 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-lg group-hover:opacity-90 transition-all duration-700"></div>
-    <div className="relative h-12 sm:h-14 lg:h-16 bg-[#030014] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8">
+    <div className="relative h-12 sm:h-14 lg:h-16 bg-[var(--bg-primary)] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden px-4 sm:px-6 lg:px-8">
       <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
       <span className="absolute inset-0 flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-lg lg:text-xl group-hover:gap-3 sm:group-hover:gap-4 transition-all duration-300">
-        <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-semibold z-10">
+        <span className="font-semibold z-10 text-[var(--text-primary)]">
           {text}
         </span>
-        <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-gray-200 ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
+        <Icon className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-[var(--text-primary)] ${text === 'Pesan Sekarang' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
       </span>
     </div>
   </button>
@@ -93,16 +93,19 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
 
-  const handleWhatsAppClick = () => {
-    const savedWhatsappConfig = localStorage.getItem('supercode_whatsapp');
-    const whatsappConfig = savedWhatsappConfig 
-      ? JSON.parse(savedWhatsappConfig) 
-      : { phoneNumber: '6281234567890', businessName: 'BandungCoding' };
-    
-    const message = `Halo ${whatsappConfig.businessName}, saya ingin konsultasi mengenai pembuatan website.`;
-    const whatsappUrl = `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  }
+  const scrollToSection = (id) => {
+    const target = document.getElementById(id);
+    if (target) {
+      const yOffset = 80; // offset to account for navbar height
+      const y = target.getBoundingClientRect().top + window.pageYOffset - yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.location.hash = `#${id}`;
+    }
+  };
+
+  const handleContactClick = () => scrollToSection('Contact');
+  const handlePackagesClick = () => scrollToSection('paket-section');
 
   // Optimize AOS initialization
   useEffect(() => {
@@ -170,7 +173,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#030014] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]" id="Home">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]" id="Home">
       <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         <div className="container mx-auto min-h-screen flex items-center justify-center py-20">
           <div className="flex flex-col items-center justify-center gap-12 sm:gap-16 max-w-6xl mx-auto">
@@ -201,9 +204,9 @@ const Home = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-row gap-4 justify-center px-4 items-stretch" data-aos="fade-up" data-aos-delay="1200">
-                  <CTAButton onClick={handleWhatsAppClick} text="Pesan Sekarang" icon={Mail} />
-                  <CTAButton onClick={handleWhatsAppClick} text="Lihat Paket" icon={ExternalLink} />
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 items-stretch w-full max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="1200">
+                  <CTAButton onClick={handleContactClick} text="Pesan Sekarang" icon={Mail} />
+                  <CTAButton onClick={handlePackagesClick} text="Lihat Paket" icon={ExternalLink} />
                 </div>
               </div>
             </div>
