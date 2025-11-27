@@ -283,30 +283,32 @@ export async function updateSiteSetting(key, value) {
  * Subscribe to projects changes
  */
 export function subscribeToProjects(callback) {
-  const subscription = supabase
+  const channel = supabase
     .channel('projects-changes')
-    .on('postgres_changes', 
+    .on(
+      'postgres_changes', 
       { event: '*', schema: 'public', table: 'projects' },
       callback
     )
     .subscribe();
 
-  return subscription;
+  return () => supabase.removeChannel(channel);
 }
 
 /**
  * Subscribe to blogs changes
  */
 export function subscribeToBlogs(callback) {
-  const subscription = supabase
+  const channel = supabase
     .channel('blogs-changes')
-    .on('postgres_changes',
+    .on(
+      'postgres_changes',
       { event: '*', schema: 'public', table: 'blogs' },
       callback
     )
     .subscribe();
 
-  return subscription;
+  return () => supabase.removeChannel(channel);
 }
 
 // ============================================

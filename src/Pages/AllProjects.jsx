@@ -23,9 +23,13 @@ export default function AllProjects() {
     // Fetch projects from Supabase
     const loadProjects = async () => {
       try {
-        const projectsData = await fetchProjects();
-        setProjects(projectsData);
-        setFilteredProjects(projectsData);
+        const { data: projectRows, error } = await fetchProjects();
+        if (error) {
+          throw error;
+        }
+        const fetchedProjects = Array.isArray(projectRows) ? projectRows : [];
+        setProjects(fetchedProjects);
+        setFilteredProjects(fetchedProjects);
       } catch (error) {
         console.error('[AllProjects] Error loading projects:', error);
         setProjects([]);
@@ -36,10 +40,8 @@ export default function AllProjects() {
     loadProjects();
 
     // Subscribe to real-time updates
-    const unsubscribe = subscribeToProjects((newProjects) => {
-      console.log('🔄 [AllProjects] Real-time update:', newProjects.length);
-      setProjects(newProjects);
-      setFilteredProjects(newProjects);
+    const unsubscribe = subscribeToProjects(() => {
+      loadProjects();
     });
 
     // Scroll to top on mount

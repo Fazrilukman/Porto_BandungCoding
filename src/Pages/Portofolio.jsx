@@ -98,9 +98,15 @@ export default function FullWidthTabs() {
     
     try {
       // Fetch projects from Supabase
-      const projectsData = await fetchProjects();
-      console.log("[Portofolio] Loaded projects from Supabase:", projectsData.length, "items");
-      setProjects(projectsData);
+      const { data: projectRows, error } = await fetchProjects();
+      if (error) {
+        console.error("[Portofolio] Error fetching projects from Supabase:", error);
+        setProjects([]);
+      } else {
+        const fetchedProjects = Array.isArray(projectRows) ? projectRows : [];
+        console.log("[Portofolio] Loaded projects from Supabase:", fetchedProjects.length, "items");
+        setProjects(fetchedProjects);
+      }
 
       // Fetch carousel from localStorage (temporary - will migrate later)
       const savedCarousel = localStorage.getItem("supercode_carousel");
@@ -140,9 +146,8 @@ export default function FullWidthTabs() {
     fetchData(); // Load data from Supabase on mount
     
     // Subscribe to real-time updates
-    const unsubscribe = subscribeToProjects((newProjects) => {
-      console.log('🔄 Real-time update: Projects changed', newProjects.length);
-      setProjects(newProjects);
+    const unsubscribe = subscribeToProjects(() => {
+      fetchData();
     });
     
     return () => {
@@ -229,7 +234,8 @@ export default function FullWidthTabs() {
     return `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
-  const displayedProjects = projects.slice(0, 3);
+  const safeProjects = Array.isArray(projects) ? projects : [];
+  const displayedProjects = safeProjects.slice(0, 3);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
   // Sisa dari komponen (return statement) tidak ada perubahan
@@ -268,7 +274,7 @@ export default function FullWidthTabs() {
           }}
           className="project-swiper"
         >
-          {(carouselImages.length > 0 ? carouselImages : projects.slice(0, 6)).map((item, index) => (
+          {(carouselImages.length > 0 ? carouselImages : safeProjects.slice(0, 6)).map((item, index) => (
             <SwiperSlide key={item.id || index}>
               <div className="w-full h-[280px] rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
                 <img 
@@ -387,7 +393,7 @@ export default function FullWidthTabs() {
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
-              {projects.length === 0 ? (
+              {safeProjects.length === 0 ? (
                 <div className="text-center py-20">
                   <Code size={64} className="mx-auto mb-4 text-purple-400 opacity-50" />
                   <p className="text-slate-600 dark:text-slate-400 text-lg">No projects yet. Add your first project in the <a href="/admin" className="text-purple-400 hover:text-purple-300 underline">Admin Dashboard</a>!</p>
@@ -458,7 +464,7 @@ export default function FullWidthTabs() {
                 </div>
               )}
             </div>
-            {projects.length > 3 && (
+            {safeProjects.length > 3 && (
               <div className="mt-8 w-full flex justify-center">
                 <a
                   href="/all-projects"
