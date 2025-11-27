@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import logoImage from "../assets/logo.png";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +8,7 @@ const Navbar = () => {
     const [activeSection, setActiveSection] = useState("Home");
     const [profile, setProfile] = useState(null);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+    const displayedLogo = profile?.logoUrl || logoImage;
     
     const navItems = [
         { href: "#Home", label: "Home" },
@@ -128,13 +130,11 @@ const Navbar = () => {
                             onClick={(e) => scrollToSection(e, "#Home")}
                             className="flex items-center gap-2 text-xl font-bold"
                         >
-                            {profile?.logoUrl && (
-                                <img
-                                    src={profile.logoUrl}
-                                    alt="Logo"
-                                    className="w-8 h-8 rounded-lg object-cover border border-white/10"
-                                />
-                            )}
+                            <img
+                                src={displayedLogo}
+                                alt={profile?.brandName || 'Logo'}
+                                className="w-8 h-8 rounded-lg object-cover border border-white/10"
+                            />
                             <span className="bg-gradient-to-r from-[#a855f7] to-[#6366f1] bg-clip-text text-transparent">
                                 {profile?.brandName || 'BandungCoding'}
                             </span>

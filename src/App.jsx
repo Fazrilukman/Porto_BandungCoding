@@ -19,9 +19,10 @@ import BlogDetail from "./Pages/BlogDetail";
 import AllProjects from "./Pages/AllProjects";
 import AllBlogs from "./Pages/AllBlogs";
 
+// 1. JANGAN LUPA IMPORT SUPABASE CLIENT
+import { supabase } from "./supabaseClient"; 
 const LandingPage = () => {
   useEffect(() => {
-    // Reset scroll to top on initial load
     window.scrollTo(0, 0);
   }, []);
 
@@ -50,39 +51,49 @@ const ProjectPageLayout = () => (
 
 function App() {
   useEffect(() => {
-    // Clear any hash in URL on initial load
     if (window.location.hash) {
       window.history.replaceState(null, '', window.location.pathname);
     }
-    // Ensure page starts at top
     window.scrollTo(0, 0);
   }, []);
 
+  // ============================================
+  // 2. BAGIAN INI SAYA PERBAIKI (DARI SUPABASE)
+  // ============================================
   useEffect(() => {
-    const applyFavicon = () => {
-      let profile = null;
+    const updateFavicon = async () => {
       try {
-        const stored = localStorage.getItem('supercode_profile');
-        if (stored) profile = JSON.parse(stored);
-      } catch (err) {
-        profile = null;
-      }
+        // Ambil URL logo dari tabel site_settings di Supabase
+        // Pastikan 'site_icon' sesuai dengan nama key di database Anda
+        // Jika di Admin panel Anda menyimpannya sebagai 'logo' atau 'favicon', ganti 'site_icon' dibawah.
+        const { data, error } = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('key', 'site_icon') 
+          .single();
 
-      const iconUrl = profile?.logoUrl || '/favicon.svg';
-      let link = document.querySelector('link[rel="icon"]');
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
+        if (data && data.value) {
+          // Cari elemen <link rel="icon">
+          let link = document.querySelector("link[rel~='icon']");
+          
+          // Jika belum ada, buat baru
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+          }
+          
+          // Ganti gambar
+          link.href = data.value;
+        }
+      } catch (err) {
+        console.error("Gagal memuat favicon dari Supabase:", err);
       }
-      link.type = 'image/png';
-      link.href = iconUrl;
     };
 
-    applyFavicon();
-    window.addEventListener('storage', applyFavicon);
-    return () => window.removeEventListener('storage', applyFavicon);
+    updateFavicon();
   }, []);
+  // ============================================
 
   return (
     <BrowserRouter>
@@ -93,7 +104,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/all-blogs" element={<AllBlogs />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="*" element={<NotFoundPage />} /> {/* Ini route 404 */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

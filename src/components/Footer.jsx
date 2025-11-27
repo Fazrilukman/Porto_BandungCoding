@@ -1,6 +1,7 @@
 import React from 'react';
 import { Instagram, Mail, Phone, MapPin, ExternalLink, Heart, Youtube, MessageCircle } from 'lucide-react';
 import { FaTiktok } from 'react-icons/fa';
+import logoImage from '../assets/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,6 +15,8 @@ const Footer = () => {
     }
     return null;
   })();
+
+  const displayedLogo = profile?.logoUrl || logoImage;
 
   const footerLinks = {
     company: [
@@ -86,13 +89,11 @@ const Footer = () => {
             {/* Company Info */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                {profile?.logoUrl && (
-                  <img
-                    src={profile.logoUrl}
-                    alt="Logo"
-                    className="w-10 h-10 rounded-lg object-cover border border-white/10"
-                  />
-                )}
+                <img
+                  src={displayedLogo}
+                  alt={profile?.brandName || 'Logo'}
+                  className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                />
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent mb-1">
                     {profile?.brandName || 'BandungCoding'}
