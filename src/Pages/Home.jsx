@@ -24,19 +24,19 @@ const MainTitle = memo(() => (
     <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold tracking-tight flex flex-col md:flex-row items-center justify-center md:gap-4">
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-[#1e293b] via-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6] to-[#a855f7] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(139,92,246,0.3)]">
           Bandung
         </span>
       </span>
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-[#8b5cf6] via-[#a855f7] to-[#d946ef] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(168,85,247,0.3)]">
           Coding
         </span>
       </span>
     </h1>
-    <p className="text-lg sm:text-xl md:text-2xl text-[var(--text-primary)] font-light mt-4">
-      Jasa Pembuatan Website Profesional
+    <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-200 font-medium mt-4">
+      Jasa Pembuatan Website Bandung
     </p>
   </div>
 ));
@@ -77,7 +77,7 @@ const SocialLink = memo(({ icon: Icon, link }) => (
 const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
-const WORDS = ["Solusi Website Profesional untuk Bisnis Anda", "Desain Modern & Responsif", "Harga Terjangkau, Kualitas Premium"];
+const WORDS = ["Jasa Website Profesional di Bandung", "Desain Modern & Responsif", "Harga Terjangkau, Kualitas Premium"];
 const TECH_STACK = ["React", "Javascript", "Node.js", "Tailwind", "Firebase", "MySQL"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/BandungCoding" },
@@ -200,7 +200,7 @@ const Home = () => {
                 <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light px-4"
                   data-aos="fade-up"
                   data-aos-delay="1000">
-                  Kami menyediakan jasa pembuatan website profesional dengan desain modern, responsif, dan SEO-friendly. Wujudkan website impian Anda dengan harga terjangkau dan kualitas terbaik.
+                  Kami menyediakan jasa pembuatan website di Bandung dengan desain modern, responsif, dan SEO-friendly. Melayani pembuatan website company profile, toko online, dan landing page dengan harga terjangkau dan kualitas terbaik. Konsultasi gratis sekarang!
                 </p>
 
                 {/* CTA Buttons */}

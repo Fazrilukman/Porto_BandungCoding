@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
-const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
+const CardProject = ({ Img, image, Title, title, name, Description, description, Link, link, id }) => {
+  // Normalize data - support both uppercase and lowercase field names
+  const projectImage = Img || image;
+  const projectTitle = Title || title || name;
+  const projectDescription = Description || description;
+  const projectLink = Link || link;
+
   // Handle kasus ketika ProjectLink kosong
   const handleLiveDemo = (e) => {
-    if (!ProjectLink) {
+    if (!projectLink) {
       console.log("ProjectLink kosong");
       e.preventDefault();
       alert("Live demo link is not available");
@@ -30,25 +36,25 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
         <div className="relative p-5 z-10">
           <div className="relative overflow-hidden rounded-lg h-48 sm:h-56 md:h-64">
             <img
-              src={Img}
-              alt={Title}
+              src={projectImage}
+              alt={projectTitle}
               className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
             />
           </div>
           
           <div className="mt-4 space-y-3">
             <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-200 dark:via-purple-200 dark:to-pink-200 bg-clip-text text-transparent">
-              {Title}
+              {projectTitle}
             </h3>
             
             <p className="text-slate-600 dark:text-gray-300/80 text-sm leading-relaxed line-clamp-2">
-              {Description}
+              {projectDescription}
             </p>
             
             <div className="pt-4 flex items-center justify-between">
-              {ProjectLink ? (
+              {projectLink ? (
                 <a
-                href={ProjectLink || "#"}
+                href={projectLink || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleLiveDemo}
