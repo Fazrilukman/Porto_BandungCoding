@@ -296,12 +296,12 @@ export default function FullWidthTabs() {
   const displayedProjects = projects.slice(0, 3);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
-  console.log('📊 Portfolio State:', {
-    totalProjects: projects.length,
-    displayedProjects: displayedProjects.length,
-    carouselImages: carouselImages.length,
-    hasData: projects.length > 0
-  });
+  // Debug logging
+  useEffect(() => {
+    if (projects.length > 0) {
+      console.log('📊 Portfolio loaded:', projects.length, 'projects');
+    }
+  }, [projects]);
 
   // Sisa dari komponen (return statement) tidak ada perubahan
   return (
