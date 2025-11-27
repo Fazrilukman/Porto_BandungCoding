@@ -453,25 +453,32 @@ export default function FullWidthTabs() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-                  {displayedProjects.map((project, index) => (
+                  {displayedProjects.map((project, index) => {
+                    const projectImage = project.image || project.Img || 'https://placehold.co/800x600/6366f1/ffffff/png?text=' + encodeURIComponent(project.name || project.title || 'Project');
+                    const projectTitle = project.name || project.title || project.Title || 'Untitled Project';
+                    const projectDesc = project.description || project.Description || 'No description available';
+                    const projectLink = project.link || project.Link || '';
+                    
+                    return (
                     <div
                       key={project.id || index}
                       data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                       data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                     >
                       <div className="bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
-                        {(project.image || project.Img) && (
-                          <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
-                            <img 
-                              src={project.image || project.Img} 
-                              alt={project.name || project.title || project.Title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          </div>
-                        )}
+                        <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                          <img 
+                            src={projectImage}
+                            alt={projectTitle}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            onError={(e) => {
+                              e.target.src = 'https://placehold.co/800x600/6366f1/ffffff/png?text=' + encodeURIComponent(projectTitle);
+                            }}
+                          />
+                        </div>
                         <div className="p-6">
-                          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{project.name || project.title || project.Title}</h3>
-                          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">{project.description || project.Description}</p>
+                          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{projectTitle}</h3>
+                          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">{projectDesc}</p>
                           <div className="flex flex-wrap gap-2 mb-4">
                             {(project.techStack || []).slice(0, 3).map((tech, i) => (
                               <span key={i} className="text-xs px-2 py-1 bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
@@ -479,19 +486,34 @@ export default function FullWidthTabs() {
                               </span>
                             ))}
                           </div>
-                          <a 
-                            href={`/project/${project.id}`}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group shadow-md"
-                          >
-                            View Project
-                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </a>
+                          <div className="flex gap-2">
+                            <a 
+                              href={`/project/${project.id}`}
+                              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group shadow-md"
+                            >
+                              View Project
+                              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </a>
+                            {projectLink && (
+                              <a 
+                                href={projectLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm font-semibold transition-all duration-300 border border-blue-500/20"
+                                title="Live Demo"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )})}
                 </div>
               )}
             </div>
