@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { fetchProjects, subscribeToProjects } from "../utils/supabaseHelpers";
 
 export default function AllProjects() {
   const navigate = useNavigate();
@@ -19,16 +20,34 @@ export default function AllProjects() {
       duration: 800,
     });
 
-    // Load projects from localStorage
-    const savedProjects = localStorage.getItem('supercode_projects');
-    if (savedProjects) {
-      const parsedProjects = JSON.parse(savedProjects);
-      setProjects(parsedProjects);
-      setFilteredProjects(parsedProjects);
-    }
+    // Fetch projects from Supabase
+    const loadProjects = async () => {
+      try {
+        const projectsData = await fetchProjects();
+        setProjects(projectsData);
+        setFilteredProjects(projectsData);
+      } catch (error) {
+        console.error('[AllProjects] Error loading projects:', error);
+        setProjects([]);
+        setFilteredProjects([]);
+      }
+    };
+
+    loadProjects();
+
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToProjects((newProjects) => {
+      console.log('🔄 [AllProjects] Real-time update:', newProjects.length);
+      setProjects(newProjects);
+      setFilteredProjects(newProjects);
+    });
 
     // Scroll to top on mount
     window.scrollTo(0, 0);
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, []);
 
   useEffect(() => {

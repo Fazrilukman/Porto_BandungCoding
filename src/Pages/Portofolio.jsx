@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-
-// import { supabase } from "../supabase"; 
+import { fetchProjects, subscribeToProjects } from "../utils/supabaseHelpers"; 
 
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -95,97 +94,33 @@ export default function FullWidthTabs() {
 
 
   const fetchData = useCallback(async () => {
+    console.log("[Portofolio] Fetching data from Supabase...");
+    
     try {
-      // Load from localStorage (Admin data)
-      const savedProjects = localStorage.getItem('supercode_projects');
-      const savedTechStack = localStorage.getItem('supercode_techstack');
-      const savedCarousel = localStorage.getItem('supercode_carousel');
-      
-      console.log('📂 Checking localStorage...');
-      console.log('supercode_projects exists:', !!savedProjects);
-      
-      if (savedProjects) {
-        const parsedProjects = JSON.parse(savedProjects);
-        console.log('✅ Loaded', parsedProjects.length, 'projects from Admin');
-        console.log('First project:', parsedProjects[0]);
-        setProjects(parsedProjects);
-      } else {
-        console.log('⚠️ No saved projects found, loading defaults');
-        // Default projects if localStorage is empty
-        const defaultProjects = [
-          {
-            id: 1,
-            name: 'E-Commerce Platform',
-            image: 'https://placehold.co/800x600/4f46e5/ffffff/png?text=E-Commerce+Platform',
-            techStack: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind CSS'],
-            description: 'Modern e-commerce solution with payment integration, shopping cart, user authentication, and admin dashboard. Built with scalability and performance in mind.',
-            category: 'Web Development',
-            link: '',
-            featured: true,
-            Features: [
-              'User Authentication & Authorization',
-              'Shopping Cart & Wishlist',
-              'Payment Gateway Integration',
-              'Admin Dashboard',
-              'Product Search & Filtering',
-              'Responsive Design'
-            ],
-            Github: 'Private'
-          },
-          {
-            id: 2,
-            name: 'Portfolio Website',
-            image: 'https://placehold.co/800x600/8b5cf6/ffffff/png?text=Portfolio+Website',
-            techStack: ['React', 'Tailwind CSS', 'Vite', 'Framer Motion'],
-            description: 'Creative portfolio website with modern animations and smooth transitions. Showcasing projects, skills, and professional experience with an elegant design.',
-            category: 'Web Development',
-            link: '',
-            featured: true,
-            Features: [
-              'Smooth Page Transitions',
-              'Interactive Animations',
-              'Project Showcase Gallery',
-              'Contact Form Integration',
-              'Mobile Responsive',
-              'Dark Mode Support'
-            ],
-            Github: 'Private'
-          },
-          {
-            id: 3,
-            name: 'Dashboard Analytics',
-            image: 'https://placehold.co/800x600/6366f1/ffffff/png?text=Dashboard+Analytics',
-            techStack: ['React', 'Chart.js', 'Firebase', 'Material-UI'],
-            description: 'Real-time analytics dashboard with data visualization, charts, and metrics tracking. Perfect for monitoring business KPIs and making data-driven decisions.',
-            category: 'Web Development',
-            link: '',
-            featured: true,
-            Features: [
-              'Real-time Data Updates',
-              'Interactive Charts & Graphs',
-              'Custom Metrics Tracking',
-              'Export Reports (PDF/Excel)',
-              'Multi-user Support',
-              'Data Filtering & Search'
-            ],
-            Github: 'Private'
-          }
-        ];
-        setProjects(defaultProjects);
-        localStorage.setItem('supercode_projects', JSON.stringify(defaultProjects));
-      }
-      
-      // Load carousel images
+      // Fetch projects from Supabase
+      const projectsData = await fetchProjects();
+      console.log("[Portofolio] Loaded projects from Supabase:", projectsData.length, "items");
+      setProjects(projectsData);
+
+      // Fetch carousel from localStorage (temporary - will migrate later)
+      const savedCarousel = localStorage.getItem("supercode_carousel");
       if (savedCarousel) {
-        setCarouselImages(JSON.parse(savedCarousel));
+        try {
+          const parsedCarousel = JSON.parse(savedCarousel);
+          setCarouselImages(parsedCarousel);
+          console.log("[Portofolio] Loaded carousel:", parsedCarousel.length, "items");
+        } catch (error) {
+          console.error("[Portofolio] Error parsing carousel:", error);
+          setCarouselImages([]);
+        }
       }
-      
-      // Update techStacks from admin if available
+
+      // Fetch tech stacks from localStorage (temporary - will migrate later)
+      const savedTechStack = localStorage.getItem('supercode_techstack');
       if (savedTechStack) {
         const adminTechStack = JSON.parse(savedTechStack);
-        // Convert admin format to portfolio format
         const formattedTechStack = adminTechStack.map(tech => ({
-          icon: tech.icon, // Using emoji as icon
+          icon: tech.icon,
           language: tech.name,
           category: tech.category
         }));
@@ -194,48 +129,24 @@ export default function FullWidthTabs() {
       
       setCertificates([]);
     } catch (error) {
-      console.warn("⚠️ Error loading data:", error.message);
+      console.error("[Portofolio] Error fetching data from Supabase:", error);
       setProjects([]);
-      setCertificates([]);
     }
   }, []);
 
 
 
   useEffect(() => {
-    // Coba ambil dari localStorage dulu untuk laod lebih cepat
-    const cachedProjects = localStorage.getItem('projects');
-    const cachedCertificates = localStorage.getItem('certificates');
-
-    if (cachedProjects && cachedCertificates) {
-        setProjects(JSON.parse(cachedProjects));
-        setCertificates(JSON.parse(cachedCertificates));
-    }
+    fetchData(); // Load data from Supabase on mount
     
-    fetchData(); // Tetap panggil fetchData untuk sinkronisasi data terbaru
-    
-    // Listen for storage changes from other tabs/windows
-    const handleStorageChange = (e) => {
-      if (e.key === 'supercode_projects' && e.newValue) {
-        const newProjects = JSON.parse(e.newValue);
-        setProjects(newProjects);
-        console.log('🔄 Projects updated from storage event:', newProjects.length);
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Also listen for custom refresh event
-    const handleRefresh = () => {
-      fetchData();
-      console.log('🔄 Manual refresh triggered');
-    };
-    
-    window.addEventListener('portfolio-refresh', handleRefresh);
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToProjects((newProjects) => {
+      console.log('🔄 Real-time update: Projects changed', newProjects.length);
+      setProjects(newProjects);
+    });
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('portfolio-refresh', handleRefresh);
+      if (unsubscribe) unsubscribe();
     };
   }, [fetchData]);
 
