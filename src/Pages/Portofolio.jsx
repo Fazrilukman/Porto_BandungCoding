@@ -10,7 +10,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import CardProject from "../components/CardProject";
 import TechStackIcon from "../components/TechStackIcon";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -102,14 +101,10 @@ export default function FullWidthTabs() {
       const savedTechStack = localStorage.getItem('supercode_techstack');
       const savedCarousel = localStorage.getItem('supercode_carousel');
       
-      console.log('🔍 Loading projects from localStorage:', savedProjects ? 'Found' : 'Not found');
-      
       if (savedProjects) {
         const parsedProjects = JSON.parse(savedProjects);
-        console.log('✅ Projects loaded:', parsedProjects.length, 'projects');
         setProjects(parsedProjects);
       } else {
-        console.log('⚠️ No saved projects, using default data');
         // Default projects if localStorage is empty
         const defaultProjects = [
           {
@@ -296,13 +291,6 @@ export default function FullWidthTabs() {
   const displayedProjects = projects.slice(0, 3);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
-  // Debug logging
-  useEffect(() => {
-    if (projects.length > 0) {
-      console.log('📊 Portfolio loaded:', projects.length, 'projects');
-    }
-  }, [projects]);
-
   // Sisa dari komponen (return statement) tidak ada perubahan
   return (
     <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden" id="Portofolio">
@@ -471,18 +459,37 @@ export default function FullWidthTabs() {
                       data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                       data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                     >
-                      <CardProject
-                        Img={project.image}
-                        image={project.image}
-                        Title={project.name || project.title}
-                        title={project.title}
-                        name={project.name}
-                        Description={project.description}
-                        description={project.description}
-                        Link={project.link}
-                        link={project.link}
-                        id={project.id}
-                      />
+                      <div className="bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
+                        {(project.image || project.Img) && (
+                          <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                            <img 
+                              src={project.image || project.Img} 
+                              alt={project.name || project.title || project.Title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                          </div>
+                        )}
+                        <div className="p-6">
+                          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{project.name || project.title || project.Title}</h3>
+                          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">{project.description || project.Description}</p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {(project.techStack || []).slice(0, 3).map((tech, i) => (
+                              <span key={i} className="text-xs px-2 py-1 bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                          <a 
+                            href={`/project/${project.id}`}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group shadow-md"
+                          >
+                            View Project
+                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
