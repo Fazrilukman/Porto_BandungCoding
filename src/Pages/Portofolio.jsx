@@ -101,10 +101,16 @@ export default function FullWidthTabs() {
       const savedTechStack = localStorage.getItem('supercode_techstack');
       const savedCarousel = localStorage.getItem('supercode_carousel');
       
+      console.log('📂 Checking localStorage...');
+      console.log('supercode_projects exists:', !!savedProjects);
+      
       if (savedProjects) {
         const parsedProjects = JSON.parse(savedProjects);
+        console.log('✅ Loaded', parsedProjects.length, 'projects from Admin');
+        console.log('First project:', parsedProjects[0]);
         setProjects(parsedProjects);
       } else {
+        console.log('⚠️ No saved projects found, loading defaults');
         // Default projects if localStorage is empty
         const defaultProjects = [
           {
@@ -207,6 +213,30 @@ export default function FullWidthTabs() {
     }
     
     fetchData(); // Tetap panggil fetchData untuk sinkronisasi data terbaru
+    
+    // Listen for storage changes from other tabs/windows
+    const handleStorageChange = (e) => {
+      if (e.key === 'supercode_projects' && e.newValue) {
+        const newProjects = JSON.parse(e.newValue);
+        setProjects(newProjects);
+        console.log('🔄 Projects updated from storage event:', newProjects.length);
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom refresh event
+    const handleRefresh = () => {
+      fetchData();
+      console.log('🔄 Manual refresh triggered');
+    };
+    
+    window.addEventListener('portfolio-refresh', handleRefresh);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('portfolio-refresh', handleRefresh);
+    };
   }, [fetchData]);
 
   // Scroll to paket section if hash exists
